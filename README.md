@@ -1,3 +1,3 @@
-# clarify239.github.io
+# claire.github.io
 
 ### creating a website for fun
