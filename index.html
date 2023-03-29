@@ -1,52 +1,86 @@
 <!DOCTYPE html>
-<head>
-  <title> Claire's Website </title>
-  <link rel = "stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap" rel="stylesheet">
-</head>
-<body>
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-  <div class="navbar__container">
-    <a href="#home" id="navbar__logo">Claire Cheng</a>
-    <div class="navbar__toggle" id="mobile-menu">
-      <span class="bar"></span> <span class="bar"></span>
-      <span class="bar"></span>
-    </div>
-    <ul class="navbar__menu">
-      <li class="navbar__item">
-        <a href="#home" class="navbar__links" id="home-page">Home</a>
-      </li>
-      <!-- <li class="navbar__item">
-        <a href="#about" class="navbar__links" id="about-page">About</a>
-      </li> -->
-      <li class="navbar__item">
-        <a href="#projects" class="navbar__links" id="projects-page">Projects</a>
-      </li>
-      <!-- <li class="navbar__btn">
-        <a href="#sign-up" class="button" id="signup">hi</a>
-      </li> -->
-    </ul>
-  </div>
-  </nav>
+<html>
+  <head>
+    <title>Claire Cheng - Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header>
+      <h1>Claire Cheng</h1>
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact-me">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="about">
+        <div class="about-wrapper">
+          <div class="about-text">
+            <h2>About Me</h2>
+            <p>Hi, I'm Claire Cheng, a highschool student at WW-P High School North who is interested in coding.</p>
+            <p>When I'm not coding, I enjoy playing video games, hanging out with my friends, and sleeping.</p>
+          </div>
+          <!-- <div class="profile-pic">
+            <img src="tobereplaced.jpg" alt="Profile Picture">
+          </div> -->
+        </div>
+      </section>
 
-  <!-- About Me Section -->
-  <div class = "hero" id "home">
-    <div class = "hero-child hero__container">
-      <h1 class = "hero__heading"> Hello! :)</h1>
-      <p class = "hero__description"> 
-        My name is Claire Cheng. I'm currently a highschool student at High School North.
-      </p>
-      <p class = "hero__description1"> 
-        Check out my projects!
-      </p>
-      <button class = "hero__button"> Projects</button>
-    </div>
-    <div class = "hero-child image">
-      <img class = "hero__picture" src = "lofigirl.jpg">
-    </div>
-  </div>
-</body>
+
+      <!-- Projects -->
+      <section id = "projects">
+        <h1 class = "my-projects-heading">My Projects!</h1>
+        <div class="slideshow-container">
+          <div class="slide">
+            <img src="project1.png" alt="Project 1">
+            <div class="caption">can generate random valorant strats, guns, and agents</div>
+          </div>
+        
+          <div class="slide">
+            <img src="project2.png" alt="Project 2">
+            <div class="caption">small portfolio page i made</div>
+          </div>
+        
+          <!-- <div class="slide">
+            <img src="project3.jpg" alt="Project 3">
+            <div class="caption">Project 3</div>
+          </div> -->
+        
+          <!-- Add more slides as needed -->
+        
+          <a class="prev" onclick="prevSlide()">&#10094;</a>
+          <a class="next" onclick="nextSlide()">&#10095;</a>
+        </div>
+      </section>
+
+
+      <!-- Contact Me -->
+      <section id="contact-me">
+        <h2>Contact Me</h2>
+        <form action="https://formsubmit.co/e99bcdadf730b2137689b34b6d546efd " method="POST">
+        <label for="name"> Name:</label>
+          <input type="text" id="name" name="name" placeholder="Enter your name" required>
+ 
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+          <label for="message">Message:</label>
+          <textarea id="message" name="message" placeholder="Enter your message" required></textarea>
+
+          <button type="submit">Send Message</button>
+        </form>
+      </section>
+
+    </main>
+    <footer>
+      <p>&copy; Claire Cheng</p>
+    </footer>
+
+    <script src="myscripts.js"></script>
+  </body>
 </html>
