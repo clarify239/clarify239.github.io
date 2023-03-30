@@ -9,10 +9,14 @@
 
 /* Style the body */
 body {
-  font-family: "Open Sans", sans-serif;
+  /* font-family: "Open Sans", sans-serif; */
   background-color: var(--quaternary-color);
   color: var(--primary-color);
   line-height: 1.6;
+}
+
+*{
+  font-family: Ubuntu;
 }
 
 /* Style the navigation bar */
@@ -102,6 +106,10 @@ body {
   padding: 0;
 }
 
+.Claire_Cheng{
+  font-family:"Space Mono", monospace;
+}
+
 
 /* Style the about section */
 section#about {
@@ -130,9 +138,12 @@ section#projects{
   padding: 60px 20px;
   background-color: var(--tertiary-color);
 }
+
 .my-projects-heading{
   text-align: center;
+  font-size: 36px;
 }
+
 .slideshow-container {
   position: relative;
   max-width: 800px;
@@ -199,6 +210,8 @@ section#projects{
   text-align: center;
   color: #565264;
   margin-bottom: 50px;
+  font-size: 36px;
+
 }
 
 #contact-me form {
@@ -247,3 +260,9 @@ section#projects{
 #contact-me button[type="submit"]:hover {
   background-color: var(--secondary-color);
 }
+
+footer{
+  margin-left: 20px;
+}
+
+
