@@ -8,16 +8,23 @@ window.SITE_CONFIG = {
     github: 'https://github.com/', // your GitHub profile
   },
 
-  // Photos shown in the house dialogs (leave '' to show the pixel item instead)
+  // Photos shown in the house dialogs. Each hobby takes a LIST of photos.
+  // With two or more, arrows appear on top of the photo so people can flip through them.
+  // Leave a list empty ([]) to show the pixel item and an "add your photos" note instead.
   photos: {
-    about: '',     // e.g. 'assets/me.jpg'
-    bake: '',
-    crochet: '',
-    cats: '',
-    fish: '',
-    music: '',     // album art (replaced automatically when Last.fm is set up)
-    games: '',     // game art (replaced automatically when Steam is set up)
+    about:   '',   // one photo, e.g. 'assets/me.jpg'
+    bake:    [],   // e.g. ['assets/bake1.jpg', 'assets/bake2.jpg', 'assets/bake3.jpg']
+    crochet: [],
+    cats:    [],
+    tv:      [],
+    camping: [],
+    fish:    [],
+    music:   [],   // extra photos. Album art (set up Last.fm below) is added first, automatically.
+    games:   [],   // extra photos. Game art (set up Steam below) is added first, automatically.
   },
+
+  // What the TV in the house says you're watching
+  watching: { title: 'Brooklyn Nine-Nine', note: 'A rewatch. Again. Nine-Nine!' },
 
   // Fill these in as the fallback "now playing" / "recently played" text
   nowPlaying: { song: '[Song title]', artist: '[Artist]' },
