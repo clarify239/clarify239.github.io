@@ -714,3 +714,17 @@ html { font-synthesis: none; }
 .job-tags li { padding: .1rem .55rem; font-family: 'Jersey 15', sans-serif; font-size: .95rem; background: var(--parchment-2); color: var(--ink); box-shadow: 0 0 0 2px #5A240C; }
 @media (max-width: 640px) { .jobs { grid-template-columns: 1fr; padding: 30px 18px 26px; } }
 @media (prefers-reduced-motion: reduce) { .job, .job:hover { transition: none; } }
+
+/* ---- "Other involvements" sticky note ---- */
+.job.sticky { background: #f9c6dc; justify-content: flex-start; gap: .55rem; padding-top: 1.4rem; box-shadow: 0 0 0 3px #7a2a4a, 4px 7px 0 3px rgba(0,0,0,.35); --r: 1.2deg; }
+.job.sticky::after { content: ''; position: absolute; right: 0; bottom: 0; width: 22px; height: 22px; background: linear-gradient(135deg, transparent 50%, rgba(122,42,74,.28) 50%); }
+.job.sticky h3 { margin-top: .2rem; color: #4a1630; }
+.job-pin.blue { background: #3fa7e8; }
+.sticky-list { list-style: none; margin: .3rem 0 .4rem; padding: 0; display: flex; flex-direction: column; gap: .5rem; }
+.sticky-list li { display: flex; gap: .6rem; font-size: 1rem; line-height: 1.35; color: #4a1630; }
+.sticky-list li::before { content: ''; flex: none; width: 8px; height: 8px; margin-top: .42rem; background: #e8508a; box-shadow: 0 0 0 2px #7a2a4a; }
+.sticky-list li div { display: flex; flex-direction: column; gap: .05rem; }
+.sticky-list li b { font-family: 'Jersey 15', sans-serif; font-weight: 400; font-size: 1.15rem; line-height: 1.1; color: #4a1630; }
+.sticky-list li span { font-size: .85rem; color: #7a2a4a; }
+.sticky-list { gap: .65rem; }
+.sticky-list li::before { margin-top: .38rem; }
