@@ -13,4 +13,4 @@ All art comes from free itch.io packs, used under their licenses. Thank you to t
 | Fishing rod animation, bobber "!" marker | [Pixel Fishing Assets](https://sinigangs.itch.io/pixel-fishing-assets) | Sinigangs 
 | Fish and bobber | [Cozy Fishing](https://shubibubi.itch.io/cozy-fishing) | Shubibubi |
 
-Headphones, handheld console and crosshair cursor sprites, and all sound effects (synthesized in the browser), were made for this site.
+Headphones, handheld console and crosshair cursor sprites, and all sound effects (synthesized in the browser), were made for this site. Inspiration taken from Stardew Valley.

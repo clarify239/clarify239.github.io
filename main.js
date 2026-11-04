@@ -1144,7 +1144,7 @@
     }
     if (!('IntersectionObserver' in window)) return;
     const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 });
-    document.querySelectorAll('.intro, .work-head, .guide, .exp h2, .exp li, .about-photo, .about-text, .contact-card').forEach((el, i) => {
+    document.querySelectorAll('.intro, .work-head, .guide, .job-sign, .jobs, .about-photo, .about-text, .contact-card').forEach((el, i) => {
       el.classList.add('rv'); el.style.transitionDelay = ((i % 4) * 60) + 'ms'; io.observe(el);
     });
   })();

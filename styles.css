@@ -688,3 +688,29 @@ html { font-synthesis: none; }
 .title h1 { font-size: clamp(3.5rem, 10.5vw, 8.25rem); }
 
 .jc-cap, .gbtn { font-size-adjust: 0.46; }
+
+/* ============ Job board (Where I've worked) ============ */
+.jobboard { display: flex; flex-direction: column; gap: 1.6rem; scroll-margin-top: 90px; }
+.job-sign { align-self: flex-start; display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem 1.2rem; padding: .7rem 1.6rem .8rem; background: var(--wood); color: var(--cream); box-shadow: 0 0 0 3px var(--wood-dark), 0 0 0 6px var(--wood-light), 0 0 0 9px var(--wood-dark), 6px 10px 0 9px rgba(0,0,0,.3); margin: 10px; position: relative; }
+.job-sign h2 { margin: 0; font-family: 'Jersey 15', sans-serif; font-weight: 400; font-size: clamp(2.2rem, 4.4vw, 3.2rem); letter-spacing: .08em; text-transform: uppercase; color: var(--gold); text-shadow: 0 3px 0 #2E1206; }
+.job-sign span { font-family: 'Jersey 15', sans-serif; font-size: 1.15rem; color: var(--cream); opacity: .9; }
+.jobs { list-style: none; margin: 10px; padding: 34px 28px 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 38px 28px; background: repeating-linear-gradient(90deg, rgba(0,0,0,.18) 0 3px, transparent 3px 140px), repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 2px, transparent 2px 9px), #5A2A12; box-shadow: 0 0 0 3px var(--wood-dark), 0 0 0 6px var(--wood-light), 0 0 0 9px var(--wood-dark), 6px 10px 0 9px rgba(0,0,0,.3); }
+.job { position: relative; display: flex; flex-direction: column; gap: .3rem; padding: 1.15rem 1.25rem 1.05rem; background: var(--parchment); box-shadow: 0 0 0 3px #5A240C, 4px 7px 0 3px rgba(0,0,0,.35); transform: rotate(var(--r, 0deg)); transition: transform .15s steps(3); }
+.job:nth-child(5n+1) { --r: -1.1deg; } .job:nth-child(5n+2) { --r: .9deg; } .job:nth-child(5n+3) { --r: -.6deg; } .job:nth-child(5n+4) { --r: 1deg; } .job:nth-child(5n) { --r: -.8deg; }
+.job:hover { transform: rotate(0deg) translateY(-5px); }
+.job-pin { position: absolute; left: 50%; top: -12px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: #e8363f; box-shadow: inset -3px -3px 0 rgba(0,0,0,.3), 0 0 0 3px #3a1208; }
+.job-top { display: flex; justify-content: space-between; align-items: center; font-family: 'Jersey 15', sans-serif; }
+.job-id { font-size: .95rem; letter-spacing: .1em; color: #9A4E1E; }
+.stamp { padding: 0 .55rem; font-size: 1rem; letter-spacing: .12em; border: 2px dashed currentColor; transform: rotate(-5deg); }
+.stamp.live { color: #2D531F; background: rgba(112,153,77,.18); }
+.stamp.done { color: #7a5a3a; background: rgba(122,90,58,.12); }
+.job h3 { margin: .35rem 0 0; font-family: 'Jersey 15', sans-serif; font-weight: 400; font-size: 1.85rem; line-height: 1; color: var(--ink); }
+.job-co { font-family: 'Jersey 15', sans-serif; font-size: 1.25rem; color: #9A4E1E; }
+.job-co::before { content: '@ '; opacity: .7; }
+.job-meta { font-size: .85rem; color: var(--ink-3); }
+.job p { margin: .45rem 0 0; font-size: .98rem; line-height: 1.5; color: var(--ink-2); }
+.job-tags { list-style: none; margin: auto 0 0; padding: .7rem 0 0; display: flex; flex-wrap: wrap; gap: .4rem; border-top: 2px dashed rgba(90,36,12,.35); }
+.job p + .job-tags { margin-top: .75rem; }
+.job-tags li { padding: .1rem .55rem; font-family: 'Jersey 15', sans-serif; font-size: .95rem; background: var(--parchment-2); color: var(--ink); box-shadow: 0 0 0 2px #5A240C; }
+@media (max-width: 640px) { .jobs { grid-template-columns: 1fr; padding: 30px 18px 26px; } }
+@media (prefers-reduced-motion: reduce) { .job, .job:hover { transition: none; } }
