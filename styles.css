@@ -728,3 +728,47 @@ html { font-synthesis: none; }
 .sticky-list li span { font-size: .85rem; color: #7a2a4a; }
 .sticky-list { gap: .65rem; }
 .sticky-list li::before { margin-top: .38rem; }
+
+/* ---- compact contact card + tighter gap after the claw section ---- */
+.lower { padding-bottom: 2.25rem; }
+.contact { padding: 1.5rem 1.5rem 1.5rem; }
+.contact .wrap { gap: 1.25rem; }
+.contact-card { padding: 1.25rem 1.75rem 1.3rem; gap: 1rem 2rem; align-items: center; }
+.contact-card h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); }
+.contact-card > div:first-child { gap: .45rem !important; }
+.contact-card p { font-size: 1rem; line-height: 1.5; max-width: 30rem; }
+.contact-card .actions { gap: .8rem; padding: 4px; }
+.contact-card .btn { font-size: 1rem; padding: .5rem .9rem; }
+
+/* ---- 'press E' prompt (no more automatic popups) ---- */
+.console .prompt { position: absolute; left: 50%; bottom: 5%; transform: translateX(-50%); z-index: 9; padding: 4px 12px; border: 0; font-family: 'Jersey 15', sans-serif; font-size: 1rem; font-size-adjust: 0.46; color: var(--ink); background: var(--gold); box-shadow: 0 0 0 2px #5A240C, 0 4px 0 2px #5A240C; animation: nudge 1s steps(2) infinite; }
+@keyframes nudge { 50% { transform: translateX(-50%) translateY(-3px); } }
+.console .prompt:hover { background: #fff0c0; }
+
+/* ---- buttons that are 'live' right now glow ---- */
+.gbtn.glow { filter: drop-shadow(0 0 4px #FFF4C8) drop-shadow(0 0 9px #F6CE7B) brightness(1.18); animation: gbglow 1s steps(2) infinite; }
+@keyframes gbglow { 50% { filter: drop-shadow(0 0 7px #FFF4C8) drop-shadow(0 0 16px #FFD36B) brightness(1.4); } }
+
+/* ---- sound toggle: pixel switch with a speaker ---- */
+.snd { display: inline-flex; align-items: center; gap: .5rem; padding: .55rem .6rem; }
+.snd .ico { margin: 0; width: 1.35rem; height: 1.35rem; color: var(--cream); }
+.snd .snd-off { display: none; }
+.snd.off .snd-on { display: none; }
+.snd.off .snd-off { display: inline-block; color: rgba(251,230,184,.55); }
+.snd-track { position: relative; flex: none; width: 38px; height: 18px; background: #4d8a34; box-shadow: 0 0 0 2px #1a0a04, inset 0 -3px 0 rgba(0,0,0,.25); }
+.snd-knob { position: absolute; top: 2px; left: 22px; width: 14px; height: 14px; background: var(--gold); box-shadow: 0 0 0 2px #5A240C, inset -2px -2px 0 rgba(0,0,0,.2); }
+.snd.off .snd-track { background: #2E1206; }
+.snd.off .snd-knob { left: 2px; background: #b9a07a; }
+.snd:hover .snd-knob { filter: brightness(1.12); }
+.snd:focus-visible { outline: 3px solid #FFE9A8; outline-offset: 2px; }
+
+/* ---- 'E' keycap prompt ---- */
+.console .prompt { display: inline-flex; align-items: center; gap: .5rem; padding: 4px 12px 4px 5px; color: var(--cream); background: rgba(30,18,10,.88); box-shadow: 0 0 0 2px #5A240C; animation: none; }
+.console .prompt:hover { background: rgba(60,30,14,.95); }
+.console .prompt kbd { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; font-family: 'Jersey 15', sans-serif; font-size: 1.15rem; font-size-adjust: 0.46; line-height: 1; color: var(--ink); background: #FBE6B8; box-shadow: 0 0 0 2px #1a0a04, inset 0 -3px 0 rgba(0,0,0,.18), 0 3px 0 2px #1a0a04; animation: keypress 1s steps(1) infinite; }
+@keyframes keypress { 0%, 60% { transform: translateY(0); } 70%, 90% { transform: translateY(2px); box-shadow: 0 0 0 2px #1a0a04, inset 0 -1px 0 rgba(0,0,0,.18), 0 1px 0 2px #1a0a04; } }
+
+/* Darker grey cat (house + fishing boat) and a rounded sound switch */
+.cat, .boat .cat-sit { filter: brightness(.58) contrast(1.1); }
+.snd-track { border-radius: 999px; box-shadow: 0 0 0 2px #1a0a04, inset 0 -3px 0 rgba(0,0,0,.25); }
+.snd-knob { border-radius: 50%; box-shadow: 0 0 0 2px #5A240C, inset -2px -2px 0 rgba(0,0,0,.2); }

@@ -52,10 +52,24 @@
       case 'blip': seq([988, 1319, 1976], 0.06, 0.08, 'square', 0.035); break;
       case 'sizzle': noise(0.25, 0.04, 0, 3500); break;
       case 'burn': tone(220, 0.5, 'sawtooth', 0.04, 0, 70); noise(0.3, 0.05, 0, 800); break;
+      case 'click': tone(700, 0.04, 'square', 0.03); tone(520, 0.05, 'square', 0.025, 0.03); break;
+      case 'hover': tone(1300, 0.025, 'square', 0.01); break;
+      case 'whoosh': noise(0.35, 0.05, 0, 3200); tone(300, 0.3, 'triangle', 0.02, 0, 900); break;
+      case 'door': noise(0.1, 0.06, 0, 500); tone(190, 0.16, 'triangle', 0.045, 0, 120); tone(330, 0.22, 'sawtooth', 0.018, 0.1, 210); break;
+      case 'grass': noise(0.07, 0.03, 0, 1900); break;
+      case 'coin': tone(988, 0.06, 'square', 0.04); tone(1319, 0.28, 'square', 0.04, 0.06); break;
+      case 'clunk': tone(170, 0.12, 'square', 0.05, 0, 80); noise(0.1, 0.04, 0, 600); break;
+      case 'splashSm': noise(0.18, 0.05, 0, 1500); tone(900, 0.1, 'sine', 0.02, 0, 420); break;
+      case 'paper': noise(0.14, 0.03, 0, 2600); break;
+      case 'mail': tone(784, 0.07, 'square', 0.03); tone(1175, 0.12, 'square', 0.03, 0.07); break;
+      case 'pop': tone(520, 0.05, 'sine', 0.05, 0, 1100); tone(1500, 0.04, 'sine', 0.025, 0.05); break;
+      case 'crackle': for (let i = 0; i < 4; i++) noise(0.025 + Math.random() * 0.04, 0.055, Math.random() * 0.16, 2200 + Math.random() * 2600); tone(180 + Math.random() * 120, 0.05, 'square', 0.012, Math.random() * 0.1, 90); break;
+      case 'crackleSoft': for (let i = 0; i < 2; i++) noise(0.02 + Math.random() * 0.03, 0.028, Math.random() * 0.18, 2400 + Math.random() * 2200); break;
+      case 'chime': seq([523, 659, 784], 0.08, 0.22, 'triangle', 0.03); break;
     }
   }
   const soundBtn = $('soundBtn');
-  function paintSound() { soundBtn.textContent = muted ? 'Sound: off' : 'Sound: on'; soundBtn.setAttribute('aria-pressed', String(!muted)); }
+  function paintSound() { soundBtn.classList.toggle('off', muted); soundBtn.setAttribute('aria-checked', String(!muted)); soundBtn.title = muted ? 'Sound is off. Click to turn it on' : 'Sound is on. Click to turn it off'; }
   soundBtn.addEventListener('click', () => { unlock(); muted = !muted; localStorage.setItem('cc-muted', muted ? '1' : '0'); paintSound(); sfx('select'); });
   paintSound();
 
@@ -106,6 +120,8 @@
   /* tiny pixel icons, drawn in code */
   const ICONS = {
     mail: ['............', '############', '#..........#', '##........##', '#.##....##.#', '#...####...#', '#..........#', '#..........#', '#..........#', '############', '............', '............'],
+    spk: ['............', '....#.......', '...##...#...', '.####....#..', '.####.#..#..', '.####.#..#..', '.####....#..', '...##...#...', '....#.......', '............', '............', '............'],
+    spkx: ['............', '....#.......', '...##.......', '.####.#...#.', '.####..#.#..', '.####...#...', '.####..#.#..', '...##.#...#.', '....#.......', '............', '............', '............'],
     in: ['............', '.##.........', '.##.........', '............', '.##.#####...', '.##.######..', '.##.##..###.', '.##.##..###.', '.##.##..###.', '.##.##..###.', '............', '............'],
     gh: { d: "M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" },
   };
@@ -118,6 +134,32 @@
     el.innerHTML = '<svg viewBox="0 0 ' + rows[0].length + ' ' + rows.length + '" width="100%" height="100%" fill="currentColor" shape-rendering="crispEdges" focusable="false">' + r + '</svg>';
   });
   renderQuests();
+
+  /* ---------------- UI sounds: clicks, hovers and little flourishes ---------------- */
+  (function () {
+    const own = '.console, .arcade, .mallow, .dialog, .lake, .guide, .quests';
+    document.addEventListener('click', (e) => {
+      const t = e.target.closest && e.target.closest('a, button, summary');
+      if (!t) return;
+      unlock();
+      if (t.id === 'startBtn' || t.id === 'quickBtn' || t.id === 'soundBtn' || t.closest(own) && t.id !== 'questToggle') return;
+      if (t.matches('a.btn[href="#work"]')) { sfx('whoosh'); setTimeout(() => sfx('splash'), 420); }
+      else if (t.id === 'resumeLink') sfx('paper');
+      else if (t.matches('.js-hi')) sfx('mail');
+      else if (t.matches('.nav-ico a, .btn-sq, .contact-card .btn')) sfx('blip');
+      else if (t.matches('a[href="#top"]')) sfx('whoosh');
+      else if (t.matches('.navlink, .logo, summary, #questToggle, .btn')) sfx('click');
+    });
+    if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+      let lastH = 0;
+      document.addEventListener('mouseover', (e) => {
+        const t = e.target.closest && e.target.closest('.btn, .navlink, .nav-ico a, .job');
+        if (!t || t.contains(e.relatedTarget) || t.closest(own)) return;
+        const n = performance.now(); if (n - lastH < 90) return; lastH = n;
+        sfx(t.classList.contains('job') ? 'paper' : 'hover');
+      });
+    }
+  })();
 
   /* ---------------- Title screen ---------------- */
   $('startBtn').addEventListener('click', () => {
@@ -342,6 +384,10 @@
   const c = { x: 400, y: 292, f: 'l', m: false, tx: 400, ty: 292, wait: 1.5 };
   const gal = {}, joy = { x: 0, y: 0, on: false };
   const mg = { open: false, hold: false, heat: 0, done: false, pending: false };
+  let crT = 0, fireT = 0, promptFor = null;
+  const promptBtn = document.createElement('button');
+  promptBtn.type = 'button'; promptBtn.className = 'prompt'; promptBtn.hidden = true;
+  vp.appendChild(promptBtn);
   let cam = null, keys = {}, tgt = null, route = [], dest = null, tgtOpen = false, dismissed = null, popup = null, tap = 0, tapDir = null, stuck = 0, stepT = 0, book = null, areaName = 'Home', knobKey = '';
 
   function view() {
@@ -455,6 +501,7 @@
     const id = nearest(90);
     if (id) { dismissed = null; openPop(id); } else toast('Nothing nearby. Walk up to something glowing.');
   }
+  promptBtn.addEventListener('click', (e) => { e.stopPropagation(); interact(); });
   function press(k) {
     unlock();
     if (mg.open) { if (k === 'b') closeMallow(); return; }
@@ -496,7 +543,7 @@
     joy.x = dx / KMAX; joy.y = dy / KMAX;
     setKnob(dx, dy);
   }
-  stick.addEventListener('pointerdown', (e) => { e.preventDefault(); unlock(); joy.on = true; try { stick.setPointerCapture(e.pointerId); } catch (x) {} joyMove(e); });
+  stick.addEventListener('pointerdown', (e) => { e.preventDefault(); unlock(); sfx('click'); joy.on = true; try { stick.setPointerCapture(e.pointerId); } catch (x) {} joyMove(e); });
   stick.addEventListener('pointermove', (e) => { if (joy.on) joyMove(e); });
   const joyEnd = () => { joy.on = false; joy.x = joy.y = 0; setKnob(0, 0); };
   stick.addEventListener('pointerup', joyEnd);
@@ -540,9 +587,9 @@
     else if (id === 'crochet') { emit(o, 'yarn', 7); sfx('select'); }
     else if (id === 'cats') emit({ x: c.x - 8, y: c.y - 62, w: 16, h: 6 }, 'heart', 5);
     else if (id === 'camping') { emit(o, 'spark', 6); sfx('select'); }
-    else if (id === 'drinks') { emit(o, 'bubble', 7); sfx('ding'); }
+    else if (id === 'drinks') { emit(o, 'bubble', 7); sfx('pop'); }
     else if (id === 'fish') { emit(o, 'splash', 8); sfx('splash'); }
-    else emit(o, 'spark', 4);
+    else { emit(o, 'spark', 4); sfx('paper'); }
   }
 
   /* ---------- campfire mini-game: roast a marshmallow ---------- */
@@ -573,7 +620,7 @@
     mmHint.textContent = 'Hold the button (or Space, or A) to toast. Let go when it is golden.';
     mmAgain.hidden = true; mmDraw();
   }
-  function openMallow() { closePop(false); mg.open = true; mm.hidden = false; mmReset(); sfx('open'); }
+  function openMallow() { closePop(false); promptFor = null; promptBtn.hidden = true; mg.open = true; mm.hidden = false; mmReset(); sfx('open'); }
   function closeMallow() { if (!mg.open) return; mg.open = false; mg.hold = false; mg.pending = false; mm.hidden = true; sfx('close'); }
   function goRoast() { goTo(206, 522, null); mg.pending = true; tgtOpen = false; }
   const fireBox = { x: 192, y: 472, w: 28, h: 30 };
@@ -593,6 +640,7 @@
     else { sfx('miss'); mmFinish('A bit charred, but still tasty.', false); }
   }
   function stepMallow(dt) {
+    if (mg.open) { crT -= dt; if (crT <= 0) { sfx(mg.hold && !mg.done ? 'crackle' : 'crackleSoft'); crT = (mg.hold ? 0.15 : 0.3) + Math.random() * (mg.hold ? 0.3 : 0.8); } }
     if (!mg.open || mg.done || !mg.hold) return;
     mg.heat = Math.min(1, mg.heat + 0.26 * dt);
     if (mg.heat >= 1) { sfx('burn'); emit(fireBox, 'spark', 8); mmFinish('It caught fire! Burnt to a crisp.', false); return; }
@@ -623,9 +671,19 @@
     world.classList.toggle('lit', v[0] > 0.3);
     todBtn.textContent = 'Time: ' + TOD_NAMES[todMode];
   }
-  todBtn.addEventListener('click', (e) => { e.stopPropagation(); unlock(); todMode = (todMode + 1) % 4; sfx('select'); applyTod(); });
+  todBtn.addEventListener('click', (e) => { e.stopPropagation(); unlock(); todMode = (todMode + 1) % 4; sfx('chime'); applyTod(); });
   applyTod(); setInterval(applyTod, 60000);
 
+  /* glow the console buttons that do something right now: A near an object, X and Y when there are photos to flip */
+  const gbA = document.querySelector('.gb-a'), gbX = document.querySelector('.gb-x'), gbY = document.querySelector('.gb-y');
+  let glowA = false, glowXY = false;
+  function updateGlow() {
+    const o = popup && OBJS.find((q) => q.id === popup);
+    const a = !!promptFor || (mg.open && !mg.done);
+    const xy = !!(o && !mg.open && photosFor(o).length > 1);
+    if (a !== glowA) { glowA = a; gbA.classList.toggle('glow', a); }
+    if (xy !== glowXY) { glowXY = xy; gbX.classList.toggle('glow', xy); gbY.classList.toggle('glow', xy); }
+  }
   function puff(x, y) {
     const d = div('puff', 'left:' + (x - 3).toFixed(0) + 'px;top:' + (y - 3).toFixed(0) + 'px', y - 1);
     setTimeout(() => d.remove(), 520);
@@ -654,7 +712,7 @@
       const moved = Math.hypot(p.x - ox, p.y - oy);
       if (moved < 0.01) moving = false;
       if (tgt) { stuck = moved < SPD * dt * 0.2 ? stuck + dt : 0; if (stuck > 0.35) { tgt = null; route = []; dest = null; stuck = 0; } }
-      stepT += dt; if (moving && stepT > 0.3) { stepT = 0; sfx('step'); puff(p.x, p.y); }
+      stepT += dt; if (moving && stepT > 0.3) { stepT = 0; sfx(p.y > 380 ? 'grass' : 'step'); puff(p.x, p.y); }
     }
     if (!dest && mark.classList.contains('on')) mark.classList.remove('on');
     // cat (if it ever ends up inside something solid, hop out to the nearest free spot)
@@ -700,15 +758,22 @@
     const cc = c.m ? 'run' : 'idle';
     if (catSpr.className !== cc) catSpr.className = cc;
     const an = p.y > 380 ? 'Backyard' : 'Home';
-    if (an !== areaName) { areaName = an; hud.textContent = an; }
+    if (an !== areaName) { areaName = an; hud.textContent = an; sfx('door'); }
+    if (!mg.open && Math.hypot(p.x - 206, p.y - 490) < 170) { fireT -= dt; if (fireT <= 0) { sfx('crackleSoft'); fireT = 0.5 + Math.random() * 1.3; } }
     if (mg.pending && !tgt && !mg.open) { mg.pending = false; if (Math.hypot(p.x - 206, p.y - 522) < 16) openMallow(); }
     if (mg.open) return;
     // proximity dialogs
     let near = null, best = Infinity;
     spots().forEach((o) => { const d = Math.hypot(o.cx - p.x, o.cy - p.y); if (d < o.r && d < best) { best = d; near = o.id; } });
     if (dismissed && near !== dismissed) dismissed = null;
-    if (near && near !== popup && near !== dismissed && !tgtOpen) openPop(near);
-    else if (popup && !near && moving && !tgtOpen) closePop(false);
+    // no automatic popups: close one when you walk away, and offer a 'press E' prompt when you are next to something
+    if (popup && near !== popup && moving && !tgtOpen) closePop(false);
+    const want = near && !popup && !tgtOpen ? near : null;
+    if (want !== promptFor) {
+      promptFor = want;
+      if (want) { const po = OBJS.find((q) => q.id === want); promptBtn.innerHTML = '<kbd>E</kbd><span>' + esc(po ? po.title : '') + '</span>'; }
+      promptBtn.hidden = !want;
+    }
     if (tgtOpen && !tgt) tgtOpen = false;
   }
 
@@ -863,9 +928,9 @@
           im.className = 'jumper'; im.alt = ''; im.setAttribute('aria-hidden', 'true');
           im.src = PROJECTS[Math.floor(Math.random() * PROJECTS.length)].src;
           im.style.left = x + '%'; im.style.top = y + '%';
-          im.addEventListener('animationend', () => { im.remove(); ripple(x, y, true); });
+          im.addEventListener('animationend', () => { im.remove(); ripple(x, y, true); sfx('splashSm'); });
           lake.appendChild(im);
-          ripple(x, y);
+          ripple(x, y); sfx('splashSm');
         }
         hop();
       }, 5000 + Math.random() * 6000);
@@ -1064,7 +1129,7 @@
         } else queueDrop = false;
       } else if (st === 'drop') {
         calcStop(); hy += gw * 0.55 * dt;
-        if (hy >= stopY) { hy = stopY; st = 'grab'; stT = 0; head.src = CLOSED; sfx('select'); }
+        if (hy >= stopY) { hy = stopY; st = 'grab'; stT = 0; head.src = CLOSED; sfx('clunk'); }
       } else if (st === 'grab') {
         stT += dt;
         if (stT > 0.4) {
@@ -1111,7 +1176,7 @@
     glass.addEventListener('blur', () => { keyL = keyR = false; });
     const hold = (b, set) => { b.addEventListener('pointerdown', (e) => { e.preventDefault(); unlock(); set(true); }); ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, () => set(false))); };
     hold(btnL, (v) => { bL = v; }); hold(btnR, (v) => { bR = v; });
-    btnD.addEventListener('click', () => { unlock(); if (st === 'idle' && !polOpen) { queueDrop = true; tx = cx; } });
+    btnD.addEventListener('click', () => { unlock(); if (st === 'idle' && !polOpen) { sfx('coin'); queueDrop = true; tx = cx; } });
     allBtn.addEventListener('click', () => {
       unlock();
       if (got.size >= N) {
@@ -1155,6 +1220,7 @@
     const dt = last ? Math.min(0.05, (t - last) / 1000) : 0.016; last = t;
     stepHouse(dt);
     stepMallow(dt);
+    updateGlow();
     if (clawStep) clawStep(dt);
     requestAnimationFrame(tick);
   }
