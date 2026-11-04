@@ -94,7 +94,9 @@
                     class="idle"></span></button>
                 <div class="lia idle" id="lia" aria-hidden="true"></div>
               </div>
+              <div class="daynight" aria-hidden="true"></div>
               <div class="crt" aria-hidden="true"></div>
+              <button type="button" class="tod" id="tod" aria-label="Change the time of day">Time: Auto</button>
               <div class="hud" id="hud" aria-hidden="true">Home</div>
               <div class="sv dialog" id="dialog" role="dialog" aria-live="polite" hidden></div>
             </div>
@@ -208,16 +210,20 @@
           </ol>
         </div>
         <div class="about" id="about">
-          <div class="sv about-photo" id="aboutPhoto">[Photo of Claire, ideally with yarn or a cat]</div>
+          <div class="sv about-photo" id="aboutPhoto"></div>
           <div class="sv about-text">
             <h2>A little about me</h2>
-            <p>I'm a computer science major with a psychology minor, class of 2029. Psychology is why I care how people
-              feel using what I make, not only whether it runs. I'm also social director for Women in Computing at
-              Cornell, planning events for 50 or more people.</p>
-            <p>Away from the keyboard I crochet, bake, fish, play video games and rewatch Brooklyn Nine-Nine.</p>
+            <p>CS major with a psychology minor, class of 2029. Psychology is why I care how people feel using what I
+              make. I'm also social director for Women in Computing at Cornell, planning events for 50+ people.</p>
+            <p>Off the keyboard: crochet, baking, fishing, video games and Brooklyn Nine-Nine reruns.</p>
             <span class="inventory-title">Inventory</span>
             <div class="inventory" id="inventory"></div>
           </div>
+        </div>
+        <div class="sv gallery" id="gallery" role="region" aria-roledescription="carousel" aria-label="Friends and fun stuff">
+          <div class="gal-head"><h2>Friends &amp; fun stuff</h2><span class="gal-count" id="galCount"></span></div>
+          <div class="gal-stage" id="galStage"></div>
+          <div class="gal-foot"><p class="gal-cap" id="galCap" aria-live="polite"></p><div class="gal-dots" id="galDots"></div></div>
         </div>
       </div>
     </section>

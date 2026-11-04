@@ -5,23 +5,30 @@
 window.SITE_CONFIG = {
   links: {
     resume: 'resume.pdf',          // drop your resume PDF next to index.html
-    github: 'https://github.com/', // your GitHub profile
+    github: 'https://github.com/clarify239', // your GitHub profile
   },
 
   // Photos shown in the house dialogs. Each hobby takes a LIST of photos.
   // With two or more, arrows appear on top of the photo so people can flip through them.
   // Leave a list empty ([]) to show the pixel item and an "add your photos" note instead.
   photos: {
-    about:   '',   // one photo, e.g. 'assets/me.jpg'
-    bake:    [],   // e.g. ['assets/bake1.jpg', 'assets/bake2.jpg', 'assets/bake3.jpg']
-    crochet: [],
-    cats:    [],
+    about:   'assets/me.png',   // one photo, e.g. 'assets/me.jpg'
+    bake:    ['assets/baking1.png', 'assets/baking2.png', 'assets/baking3.png', 'assets/baking4.png', 'assets/baking5.png'],   // e.g. ['assets/bake1.jpg', 'assets/bake2.jpg', 'assets/bake3.jpg']
+    crochet: ['assets/crochet1.png', 'assets/crochet2.png', 'assets/crochet3.png'],
+    cats:    ['assets/astro1.png', 'assets/astro2.png', 'assets/astro3.png'],
     tv:      [],
-    camping: [],
-    fish:    [],
+    camping: ["assets/camping1.jpg", "assets/camping2.jpg", "assets/camping3.png"],
+    fish:    ["assets/fishing1.png", "assets/fishing2.png", "assets/fishing3.png"],
     music:   [],   // extra photos. Album art (set up Last.fm below) is added first, automatically.
     games:   [],   // extra photos. Game art (set up Steam below) is added first, automatically.
   },
+
+  // The "Friends & fun stuff" carousel in the About section. Add as many as you like.
+  // Each one is { src: 'assets/file.jpg', caption: 'Short caption' }  (caption is optional)
+  gallery: [
+    // { src: 'assets/friends1.jpg', caption: 'Women in Computing social' },
+    // { src: 'assets/friends2.jpg', caption: 'Hackathon night' },
+  ],
 
   // What the TV in the house says you're watching
   watching: { title: 'Brooklyn Nine-Nine', note: 'A rewatch. Again. Nine-Nine!' },

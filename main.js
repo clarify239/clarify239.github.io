@@ -46,6 +46,12 @@
       case 'miss': tone(420, 0.35, 'triangle', 0.05, 0, 160); break;
       case 'quest': seq([784, 988, 1175, 1568], 0.11, 0.2, 'square', 0.05); tone(1568, 0.4, 'triangle', 0.04, 0.45); break;
       case 'meow': tone(700, 0.25, 'sawtooth', 0.025, 0, 450); break;
+      case 'ding': tone(1760, 0.35, 'triangle', 0.04); tone(2349, 0.4, 'triangle', 0.03, 0.12); break;
+      case 'zap': noise(0.18, 0.07, 0, 4000); tone(300, 0.06, 'square', 0.03, 0.05); tone(600, 0.06, 'square', 0.03, 0.12); break;
+      case 'melody': seq([659, 784, 659, 523, 587], 0.1, 0.16, 'triangle', 0.04); break;
+      case 'blip': seq([988, 1319, 1976], 0.06, 0.08, 'square', 0.035); break;
+      case 'sizzle': noise(0.25, 0.04, 0, 3500); break;
+      case 'burn': tone(220, 0.5, 'sawtooth', 0.04, 0, 70); noise(0.3, 0.05, 0, 800); break;
     }
   }
   const soundBtn = $('soundBtn');
@@ -61,19 +67,20 @@
       { id: 'house', label: 'Explore the house and yard', n: Q.visited.size, of: HOUSE_SPOTS },
       { id: 'fish', label: 'Catch all 6 fish', n: Q.caught.length, of: 6 },
       { id: 'resume', label: 'Open the resume', n: Q.resume ? 1 : 0, of: 1 },
+      { id: 'smore', label: 'Roast a perfect marshmallow', n: Q.smore ? 1 : 0, of: 1 },
       { id: 'hi', label: 'Say hi to Claire', n: Q.hi ? 1 : 0, of: 1 },
     ];
   }
   function renderQuests() {
     const ql = questList();
     const done = ql.filter((q) => q.n >= q.of).length;
-    $('questTitle').textContent = 'Quests ' + done + '/4';
+    $('questTitle').textContent = 'Quests ' + done + '/' + ql.length;
     $('questList').innerHTML = ql.map((q) => {
       const d = q.n >= q.of;
       const prog = q.of > 1 ? Math.min(q.n, q.of) + '/' + q.of : (d ? 'done' : '');
       return '<li class="' + (d ? 'done' : '') + '"><i aria-hidden="true"></i><span>' + esc(q.label) + '</span><small>' + prog + '</small></li>';
     }).join('');
-    $('questAll').hidden = done < 4;
+    $('questAll').hidden = done < ql.length;
   }
   let toastT = 0;
   function toast(msg) { const el = $('toast'); el.textContent = msg; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { el.hidden = true; }, 3200); }
@@ -225,15 +232,15 @@
   // x, y, w, h = where the sprite sits in the world. stand = where Claire walks to.
   // Spots are spread out so every hobby has its own corner of the house or yard.
   const OBJS = [
-    { id: 'bake', x: 6, y: 140, w: 50, h: 56, src: 'assets/obj_stove.png', stand: [86, 200], kicker: 'In the kitchen', title: 'Baking', word: 'baking', blurb: 'Weekend baking is my reset button. Signature bake: [your signature bake].' },
-    { id: 'tv', x: 352, y: 56, w: 56, h: 56, src: IMG.tv, stand: [380, 162], kicker: 'By the sofa', title: 'What I’m watching', word: 'show', live: 'tv', blurb: 'Comfort TV is half of how I recharge.' },
+    { id: 'bake', x: 6, y: 140, w: 50, h: 56, src: 'assets/obj_stove.png', stand: [86, 200], kicker: 'In the kitchen', title: 'Baking', word: 'baking', blurb: 'Weekend baking is my favorite way to unwind. I love making cookies, tiramisu, and brownies! I\'ve also recently got into making ice cream!' },
+    { id: 'tv', x: 352, y: 56, w: 56, h: 56, src: IMG.tv, stand: [380, 162], kicker: 'By the sofa', title: 'What I’m watching', word: 'show', live: 'tv', blurb: 'Comedy TV shows are my go-to. I love Brooklyn Nine-Nine, How I Met Your Mother, and The Good Place.' },
     { id: 'skills', x: 632, y: 100, w: 50, h: 80, src: 'assets/obj_books.png', stand: [612, 200], kicker: 'On the bookshelf', title: 'My skill books', word: 'skills', skills: true, blurb: '' },
     { id: 'music', x: 140, y: 254, w: 27, h: 17, src: 'assets/obj_hp.png', stand: [153, 292], kicker: 'On the floor cushion', title: 'What I’m listening to', word: 'album', live: 'music', blurb: 'Usually something cozy while I code.', under: [IMG.poufTeal, 134, 256, 36, 22] },
-    { id: 'games', x: 305, y: 286, w: 30, h: 14, src: 'assets/obj_gb.png', stand: [320, 324], kicker: 'On the beanbag', title: 'What I’m playing', word: 'game', live: 'games', blurb: 'Playing games is how I got into making them.', under: [IMG.poufRed, 302, 288, 36, 22] },
-    { id: 'crochet', x: 575, y: 298, w: 54, h: 15, src: 'assets/obj_yarn.png', stand: [560, 334], kicker: 'In the yarn basket', title: 'Crochet', word: 'crochet', blurb: 'How I unwind. On my hook right now: [current crochet project].', under: [IMG.basket, 570, 304, 64, 22] },
-    { id: 'cats', cat: true, src: 'assets/cat_portrait.png', kicker: 'Wandering the house', title: 'Cats', word: 'cat', blurb: 'The real managers of this house. Usually asleep exactly where I want to sit.' },
-    { id: 'camping', x: 62, y: 425, w: 84, h: 62, src: IMG.tent, stand: [142, 526], kicker: 'In the backyard', title: 'Camping', word: 'camping', blurb: 'Tents, campfires and no signal. Favorite trip: [your favorite camping trip].' },
-    { id: 'fish', x: 496, y: 490, w: 47, h: 42, src: 'assets/obj_rod.png', stand: [508, 562], kicker: 'On the dock', title: 'Fishing', word: 'fishing', blurb: 'Quiet mornings on the water, the opposite of a deadline. Head down to the lake to try it.' },
+    { id: 'games', x: 305, y: 286, w: 30, h: 14, src: 'assets/obj_gb.png', stand: [320, 324], kicker: 'On the beanbag', title: 'What I’m playing', word: 'game', live: 'games', blurb: 'Playing games is how I got into making them. It\'s one of my favorite ways to catch up with my friends!', under: [IMG.poufRed, 302, 288, 36, 22] },
+    { id: 'crochet', x: 575, y: 298, w: 54, h: 15, src: 'assets/obj_yarn.png', stand: [560, 334], kicker: 'In the yarn basket', title: 'Crochet', word: 'crochet', blurb: 'How I unwind. I love making clothing and stuffed animals.Currently working on a sweater based off my cat!', under: [IMG.basket, 570, 304, 64, 22] },
+    { id: 'cats', cat: true, src: 'assets/cat_portrait.png', kicker: 'Wandering the house', title: 'Astro!', word: 'cat', blurb: 'The love of my life, my cat Astro! His purring on my chest always makes me fall asleep instantly.' },
+    { id: 'camping', x: 62, y: 425, w: 84, h: 62, src: IMG.tent, stand: [142, 526], kicker: 'In the backyard', title: 'Camping', word: 'camping', blurb: 'Barbeque, marshmallows, and starry nights. The times spent with my friends next to the campfire are some of my favorites.' },
+    { id: 'fish', x: 496, y: 490, w: 47, h: 42, src: 'assets/obj_rod.png', stand: [508, 562], kicker: 'On the dock', title: 'Fishing', word: 'fishing', blurb: 'Quiet mornings on the water, or evenings at the lake. I primarily fresh water fish for bass and crappie.' },
   ];
   HOUSE_SPOTS = OBJS.length;
   // Solid bits: [x1, y1, x2, y2]
@@ -273,7 +280,7 @@
   put(IMG.tree2, 298, 396, 44, 62, 'prop', 456);
   div('pond-sh', 'left:536px;top:496px;width:136px;height:100px', 5);
   div('tv-glow', 'left:330px;top:70px;width:100px;height:120px', 1);
-  div('tv-scr', 'left:358px;top:64px;width:38px;height:29px;background-image:url(' + IMG.bars + ')', 109);
+  const tvScr = div('tv-scr', 'left:358px;top:64px;width:38px;height:29px;background-image:url(' + IMG.bars + ')', 109);
   const tvTag = div('tv-tag', 'left:322px;top:36px;width:112px', 111);
   tvTag.textContent = '▶ ' + live.show;
   OBJS.filter((o) => o.under).forEach((o) => put(o.under[0], o.under[1], o.under[2], o.under[3], o.under[4], 'prop', o.y + o.h - 1));
@@ -282,6 +289,7 @@
   div('fire-glow', 'left:168px;top:450px;width:76px;height:76px', 4);
   (function () { const r = rng(21); for (let i = 0; i < 14; i++) div('ff', 'left:' + (30 + r() * 630).toFixed(0) + 'px;top:' + (400 + r() * 200).toFixed(0) + 'px;animation-delay:' + (-r() * 8).toFixed(2) + 's;animation-duration:' + (5 + r() * 5).toFixed(2) + 's', 700); })();
   const mark = div('mark', 'left:0;top:0', 700);
+  const objEls = {};
   OBJS.filter((o) => !o.cat).forEach((o) => {
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'obj';
@@ -290,11 +298,19 @@
     b.innerHTML = '<img class="glow" src="' + o.src + '" alt="">';
     b.addEventListener('click', (e) => { e.stopPropagation(); goTo(o.stand[0], o.stand[1], o.id); });
     world.insertBefore(b, catBtn);
+    objEls[o.id] = b;
   });
+  const fireBtn = document.createElement('button');
+  fireBtn.type = 'button'; fireBtn.className = 'obj'; fireBtn.title = 'Roast a marshmallow';
+  fireBtn.setAttribute('aria-label', 'Walk to the campfire and roast a marshmallow');
+  fireBtn.style.cssText = 'left:188px;top:468px;width:36px;height:36px;z-index:503';
+  fireBtn.addEventListener('click', (e) => { e.stopPropagation(); goRoast(); });
+  world.insertBefore(fireBtn, catBtn);
 
-  const p = { x: 360, y: 270, f: 'r', m: false };
+  const p ={ x: 360, y: 270, f: 'r', m: false };
   const c = { x: 440, y: 240, f: 'l', m: false, tx: 440, ty: 240, wait: 1.5 };
   const gal = {}, joy = { x: 0, y: 0, on: false };
+  const mg = { open: false, hold: false, heat: 0, done: false, pending: false };
   let cam = null, keys = {}, tgt = null, route = [], dest = null, tgtOpen = false, dismissed = null, popup = null, tap = 0, tapDir = null, stuck = 0, stepT = 0, book = null, areaName = 'Home', knobKey = '';
 
   function view() {
@@ -329,9 +345,10 @@
     return best;
   }
   function openPop(id) {
-    if (popup === id) return;
+    if (popup === id) { react(id); return; }
     popup = id;
     Q.visited.add(id);
+    react(id);
     sfx(id === 'cats' ? 'meow' : 'open');
     renderDialog();
     checkQuests();
@@ -366,6 +383,7 @@
     if (o.live === 'music') extra = '<div class="live"><span class="label">● Now playing</span><span class="value">' + esc(live.song) + ' — ' + esc(live.artist) + '</span><span class="sub">' + (live.isLive ? 'Live from Spotify' : 'Last song I had on repeat') + '</span></div>';
     if (o.live === 'games') extra = '<div class="live"><span class="label">● Recently played on Steam</span><span class="value">' + esc(live.game) + (live.hours ? ' · ' + esc(live.hours) : '') + '</span><span class="sub">' + (live.gameLive ? 'Live from Steam' : 'Most recent game') + '</span></div>';
     if (o.live === 'tv') extra = '<div class="live"><span class="label">● Now watching</span><span class="value">' + esc(live.show) + '</span>' + (live.showNote ? '<span class="sub">' + esc(live.showNote) + '</span>' : '') + '</div>';
+    if (o.id === 'camping') extra = '<button type="button" class="btn btn-gold roast" data-act="mallow">Roast a marshmallow</button>';
     if (o.skills) {
       const bk = BOOKS.find((b) => b[0] === book);
       extra = '<div class="books">' + BOOKS.map((b) => '<button type="button" class="book" data-book="' + esc(b[0]) + '" aria-pressed="' + (book === b[0]) + '" style="background:' + b[1] + '">' + esc(b[0]) + '</button>').join('') + '</div><span class="book-text">' + (bk ? esc(bk[0] + ': ' + bk[2] + '.') : 'Pick a book to see where I used it.') + '</span>';
@@ -381,6 +399,7 @@
     dialog.setAttribute('aria-label', o.title);
     dialog.hidden = false;
     dialog.querySelector('.dialog-close').addEventListener('click', (e) => { e.stopPropagation(); closePop(true); });
+    dialog.querySelectorAll('[data-act="mallow"]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); closePop(true); goRoast(); }));
     dialog.querySelectorAll('.arr').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); stepPhoto(+b.dataset.dir); }));
     dialog.querySelectorAll('.book').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); book = b.dataset.book; sfx('select'); renderDialog(); }));
   }
@@ -407,13 +426,19 @@
   }
   function press(k) {
     unlock();
+    if (mg.open) { if (k === 'b') closeMallow(); return; }
     if (k === 'a') interact();
-    else if (k === 'b') closePop(true);
+    else if (k === 'b') { if (mg.open) closeMallow(); else closePop(true); }
     else if (k === 'x') stepPhoto(1);
     else if (k === 'y') stepPhoto(-1);
   }
   document.addEventListener('keydown', (e) => {
     if (!consoleOn || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (mg.open) {
+      if (e.key === 'Escape') closeMallow();
+      else if (e.key === ' ') { e.preventDefault(); if (!e.repeat) mgHold(true); }
+      return;
+    }
     if (e.key === 'Escape') { closePop(true); return; }
     if (e.key === 'e' || e.key === 'E') { if (!e.repeat) interact(); return; }
     if (e.key === ']') { if (!e.repeat) stepPhoto(1); return; }
@@ -423,10 +448,10 @@
     if (!keys[dir] && !e.repeat) { tapDir = [dir === 'r' ? 1 : dir === 'l' ? -1 : 0, dir === 'd' ? 1 : dir === 'u' ? -1 : 0]; tap = 0.16; }
     keys[dir] = true;
   });
-  document.addEventListener('keyup', (e) => { const dir = KEYMAP[e.key]; if (dir) keys[dir] = false; });
+  document.addEventListener('keyup', (e) => { if (e.key === ' ' && mg.hold) mgHold(false); const dir = KEYMAP[e.key]; if (dir) keys[dir] = false; });
   window.addEventListener('blur', () => { keys = {}; });
 
-  const stick = $('stick'), knob = $('stickKnob'), KMAX = 28;
+  const stick = $('stick'), knob = $('stickKnob'), KMAX = 32;
   function setKnob(dx, dy) {
     const q = (v) => Math.round(v / 4) * 4, key = q(dx) + ',' + q(dy);
     if (key === knobKey) return;
@@ -447,10 +472,127 @@
   stick.addEventListener('pointercancel', joyEnd);
   stick.addEventListener('lostpointercapture', joyEnd);
   document.querySelectorAll('.gbtn').forEach((b) => {
-    b.addEventListener('pointerdown', () => { b.classList.add('down'); });
-    ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, () => b.classList.remove('down')));
+    b.addEventListener('pointerdown', () => { b.classList.add('down'); if (b.dataset.btn === 'a' && mg.open) mgHold(true); });
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, () => { b.classList.remove('down'); if (b.dataset.btn === 'a' && mg.hold) mgHold(false); }));
     b.addEventListener('click', () => press(b.dataset.btn));
   });
+
+  /* ---------- things react when you poke them ---------- */
+  const YARN = ['#E8664F', '#F6CE7B', '#7FB7C9', '#B58AD6', '#8CC28A'];
+  function emit(o, kind, n) {
+    const cx = o.x + o.w / 2, cy = o.y + o.h * 0.35;
+    for (let i = 0; i < n; i++) {
+      const d = div('pt ' + kind, 'left:' + (cx + (Math.random() - 0.5) * o.w * 0.6).toFixed(1) + 'px;top:' + cy.toFixed(1) + 'px;--dx:' + ((Math.random() - 0.5) * 26).toFixed(1) + 'px;--dy:' + (-(20 + Math.random() * 26)).toFixed(1) + 'px;animation-delay:' + (i * 70) + 'ms', 900);
+      if (kind === 'note') d.textContent = Math.random() > 0.5 ? '♪' : '♫';
+      if (kind === 'heart') d.textContent = '♥';
+      if (kind === 'yarn') d.style.background = YARN[i % YARN.length];
+      setTimeout(() => d.remove(), 1800);
+    }
+  }
+  function wiggle(id) {
+    const b = objEls[id]; if (!b) return;
+    b.classList.remove('wig'); void b.offsetWidth; b.classList.add('wig');
+    setTimeout(() => b.classList.remove('wig'), 500);
+  }
+  let zapT = 0;
+  function zapTv() {
+    tvScr.style.setProperty('--hue', Math.floor(Math.random() * 300) + 'deg');
+    tvScr.classList.add('zap'); clearTimeout(zapT); zapT = setTimeout(() => tvScr.classList.remove('zap'), 700);
+  }
+  function react(id) {
+    const o = OBJS.find((q) => q.id === id); if (!o) return;
+    wiggle(id);
+    if (id === 'bake') { emit(o, 'steam', 6); sfx('ding'); }
+    else if (id === 'tv') { zapTv(); sfx('zap'); }
+    else if (id === 'music') { emit(o, 'note', 5); sfx('melody'); }
+    else if (id === 'games') { emit(o, 'spark', 6); sfx('blip'); }
+    else if (id === 'crochet') { emit(o, 'yarn', 7); sfx('select'); }
+    else if (id === 'cats') emit({ x: c.x - 8, y: c.y - 62, w: 16, h: 6 }, 'heart', 5);
+    else if (id === 'camping') { emit(o, 'spark', 6); sfx('select'); }
+    else if (id === 'fish') { emit(o, 'splash', 8); sfx('splash'); }
+    else emit(o, 'spark', 4);
+  }
+
+  /* ---------- campfire mini-game: roast a marshmallow ---------- */
+  const mm = document.createElement('div');
+  mm.className = 'sv mallow'; mm.hidden = true; mm.setAttribute('role', 'dialog'); mm.setAttribute('aria-label', 'Roast a marshmallow');
+  mm.innerHTML =
+    '<div class="mm-head"><b>Roast a marshmallow</b><button type="button" class="mm-x" aria-label="Close">×</button></div>' +
+    '<p class="mm-hint" id="mmHint" aria-live="polite"></p>' +
+    '<div class="mm-stage"><div class="mm-fire"></div><div class="mm-stick" id="mmStick"><i class="mm-m" id="mmM"></i></div></div>' +
+    '<div class="mm-meter"><i class="mm-gold"></i><i class="mm-pin" id="mmPin"></i></div>' +
+    '<div class="mm-scale"><span>raw</span><span>golden</span><span>burnt</span></div>' +
+    '<div class="mm-btns"><button type="button" class="btn btn-gold" id="mmHold">Hold to roast</button><button type="button" class="btn btn-wood" id="mmAgain" hidden>Try again</button></div>';
+  vp.appendChild(mm);
+  mm.querySelector('.mm-fire').style.backgroundImage = 'url(' + IMG.fire + ')';
+  const mmM = $('mmM'), mmPin = $('mmPin'), mmHint = $('mmHint'), mmStick = $('mmStick'), mmAgain = $('mmAgain');
+  const MMC = [[0, [251, 244, 230]], [0.45, [243, 220, 168]], [0.7, [217, 152, 74]], [0.85, [138, 74, 30]], [1, [42, 26, 18]]];
+  function mmColor(h) {
+    for (let i = 1; i < MMC.length; i++) if (h <= MMC[i][0]) { const a = MMC[i - 1], b = MMC[i], t = (h - a[0]) / (b[0] - a[0]); return 'rgb(' + a[1].map((v, k) => Math.round(v + (b[1][k] - v) * t)).join(',') + ')'; }
+    return 'rgb(42,26,18)';
+  }
+  function mmDraw() {
+    mmM.style.background = mmColor(mg.heat);
+    mmPin.style.left = (mg.heat * 100).toFixed(1) + '%';
+    mmStick.classList.toggle('in', mg.hold);
+  }
+  function mmReset() {
+    mg.heat = 0; mg.done = false; mg.hold = false;
+    mmHint.textContent = 'Hold the button (or Space, or A) to toast. Let go when it is golden.';
+    mmAgain.hidden = true; mmDraw();
+  }
+  function openMallow() { closePop(false); mg.open = true; mm.hidden = false; mmReset(); sfx('open'); }
+  function closeMallow() { if (!mg.open) return; mg.open = false; mg.hold = false; mg.pending = false; mm.hidden = true; sfx('close'); }
+  function goRoast() { goTo(206, 522, null); mg.pending = true; tgtOpen = false; }
+  const fireBox = { x: 192, y: 472, w: 28, h: 30 };
+  function mmFinish(msg, ok) {
+    mg.done = true; mg.hold = false; mmHint.textContent = msg; mmAgain.hidden = false; mmDraw();
+    if (ok) { Q.smore = true; sfx('catch'); emit(fireBox, 'spark', 10); checkQuests(); }
+  }
+  function mgHold(on) {
+    if (!mg.open || mg.done || on === mg.hold) return;
+    if (on) { mg.hold = true; sfx('sizzle'); mmDraw(); return; }
+    mg.hold = false;
+    const h = mg.heat;
+    if (h < 0.12) { mmDraw(); return; }
+    if (h < 0.45) { sfx('miss'); mmFinish('Still raw in the middle. Try again!', false); }
+    else if (h < 0.6) { sfx('miss'); mmFinish('Almost! It needed a little more time.', false); }
+    else if (h <= 0.85) mmFinish('Perfect golden marshmallow!', true);
+    else { sfx('miss'); mmFinish('A bit charred, but still tasty.', false); }
+  }
+  function stepMallow(dt) {
+    if (!mg.open || mg.done || !mg.hold) return;
+    mg.heat = Math.min(1, mg.heat + 0.26 * dt);
+    if (mg.heat >= 1) { sfx('burn'); emit(fireBox, 'spark', 8); mmFinish('It caught fire! Burnt to a crisp.', false); return; }
+    mmDraw();
+  }
+  mm.addEventListener('click', (e) => e.stopPropagation());
+  mm.querySelector('.mm-x').addEventListener('click', closeMallow);
+  mmAgain.addEventListener('click', () => { sfx('select'); mmReset(); });
+  const mmHold = $('mmHold');
+  mmHold.addEventListener('pointerdown', (e) => { e.preventDefault(); mgHold(true); });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => mmHold.addEventListener(ev, () => mgHold(false)));
+
+  /* ---------- time of day: follows the visitor's clock, or tap to change ---------- */
+  const todBtn = $('tod'), TOD_NAMES = ['Auto', 'Day', 'Dusk', 'Night'];
+  let todMode = 0;
+  function todVals() {
+    if (todMode === 1) return [0, 0];
+    if (todMode === 2) return [0, 1];
+    if (todMode === 3) return [1, 0];
+    const d = new Date(), h = d.getHours() + d.getMinutes() / 60;
+    let n = 0;
+    if (h >= 20.5 || h < 5.5) n = 1; else if (h >= 19) n = (h - 19) / 1.5; else if (h < 7) n = 1 - (h - 5.5) / 1.5;
+    return [n, Math.max(0, 1 - Math.abs(h - 18.3) / 1.5, 1 - Math.abs(h - 6.3))];
+  }
+  function applyTod() {
+    const v = todVals();
+    vp.style.setProperty('--night', v[0].toFixed(2)); vp.style.setProperty('--dusk', v[1].toFixed(2));
+    world.classList.toggle('lit', v[0] > 0.3);
+    todBtn.textContent = 'Time: ' + TOD_NAMES[todMode];
+  }
+  todBtn.addEventListener('click', (e) => { e.stopPropagation(); unlock(); todMode = (todMode + 1) % 4; sfx('select'); applyTod(); });
+  applyTod(); setInterval(applyTod, 60000);
 
   function puff(x, y) {
     const d = div('puff', 'left:' + (x - 3).toFixed(0) + 'px;top:' + (y - 3).toFixed(0) + 'px', y - 1);
@@ -464,7 +606,8 @@
     let len = Math.hypot(ix, iy), vx = 0, vy = 0;
     if (!joy.on) setKnob(len ? ix / Math.max(1, len) * KMAX * 0.75 : 0, len ? iy / Math.max(1, len) * KMAX * 0.75 : 0);
     if (tap > 0 && !len && tapDir) { ix = tapDir[0]; iy = tapDir[1]; len = Math.hypot(ix, iy); tap -= dt; }
-    if (len > 0.01) { tgt = null; route = []; dest = null; const m = Math.min(1, len); vx = ix / len * SPD * m; vy = iy / len * SPD * m; }
+    if (mg.open) { len = 0; ix = iy = 0; tap = 0; }
+    if (len > 0.01) { tgt = null; route = []; dest = null; mg.pending = false; const m = Math.min(1, len); vx = ix / len * SPD * m; vy = iy / len * SPD * m; }
     else if (tgt) {
       const ddx = tgt[0] - p.x, ddy = tgt[1] - p.y, d = Math.hypot(ddx, ddy);
       if (d < 2) { tgt = route.shift() || null; if (!tgt) dest = null; }
@@ -520,6 +663,8 @@
     if (catSpr.className !== cc) catSpr.className = cc;
     const an = p.y > 380 ? 'Backyard' : 'Home';
     if (an !== areaName) { areaName = an; hud.textContent = an; }
+    if (mg.pending && !tgt && !mg.open) { mg.pending = false; if (Math.hypot(p.x - 206, p.y - 522) < 16) openMallow(); }
+    if (mg.open) return;
     // proximity dialogs
     let near = null, best = Infinity;
     spots().forEach((o) => { const d = Math.hypot(o.cx - p.x, o.cy - p.y); if (d < o.r && d < best) { best = d; near = o.id; } });
@@ -716,6 +861,40 @@
     }).catch(() => {});
   }
 
+  /* ---------------- Friends & fun stuff carousel ---------------- */
+  (function () {
+    const list = (CFG.gallery || []).map((g) => (typeof g === 'string' ? { src: g, caption: '' } : g)).filter((g) => g && g.src);
+    const stage = $('galStage'), capEl = $('galCap'), dotsEl = $('galDots'), countEl = $('galCount');
+    if (!list.length) { stage.innerHTML = '<div class="gal-empty">Add photos to <b>gallery</b> in config.js to fill this carousel.</div>'; return; }
+    const n = list.length;
+    let i = 0, paused = false, inView = true, timer = 0;
+    stage.innerHTML = '<img class="gal-img" id="galImg" alt="">' + (n > 1 ? '<button type="button" class="arr arr-l" aria-label="Previous photo"></button><button type="button" class="arr arr-r" aria-label="Next photo"></button>' : '');
+    const img = $('galImg');
+    dotsEl.innerHTML = n > 1 ? list.map((g, k) => '<button type="button" aria-label="Photo ' + (k + 1) + '"></button>').join('') : '';
+    const dots = dotsEl.querySelectorAll('button');
+    function show(k) {
+      i = ((k % n) + n) % n;
+      const g = list[i];
+      img.src = g.src; img.alt = g.caption || ('Photo ' + (i + 1) + ' of ' + n);
+      capEl.textContent = g.caption || '';
+      countEl.textContent = n > 1 ? (i + 1) + ' / ' + n : '';
+      dots.forEach((d, j) => d.setAttribute('aria-current', String(j === i)));
+    }
+    const go = (d) => { show(i + d); sfx('select'); };
+    stage.querySelectorAll('.arr').forEach((b) => b.addEventListener('click', () => { unlock(); go(b.classList.contains('arr-l') ? -1 : 1); }));
+    dots.forEach((d, j) => d.addEventListener('click', () => { unlock(); show(j); sfx('select'); }));
+    let sx = null;
+    stage.addEventListener('pointerdown', (e) => { sx = e.clientX; });
+    stage.addEventListener('pointerup', (e) => { if (sx !== null && Math.abs(e.clientX - sx) > 40 && n > 1) go(e.clientX < sx ? 1 : -1); sx = null; });
+    const g = $('gallery');
+    ['mouseenter', 'focusin'].forEach((ev) => g.addEventListener(ev, () => { paused = true; }));
+    ['mouseleave', 'focusout'].forEach((ev) => g.addEventListener(ev, () => { paused = false; }));
+    if ('IntersectionObserver' in window) new IntersectionObserver((es) => { inView = es[0].isIntersecting; }, { threshold: 0.3 }).observe(g);
+    const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (n > 1 && !calm) timer = setInterval(() => { if (!paused && inView) show(i + 1); }, 5000);
+    show(0);
+  })();
+
   /* ---------------- Life: twinkling stars and panels that slide in ---------------- */
   (function () {
     const bgT = document.querySelector('.title .bg'), r = rng(11);
@@ -737,6 +916,7 @@
   function tick(t) {
     const dt = last ? Math.min(0.05, (t - last) / 1000) : 0.016; last = t;
     stepHouse(dt);
+    stepMallow(dt);
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
