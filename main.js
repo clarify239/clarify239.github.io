@@ -159,6 +159,22 @@
       ell(g, a, 22, 27, 20, 19); ell(g, b, 20, 23, 16, 15); ell(g, c, 16, 17, 9, 7);
     }),
     log: () => mk(34, 12, (g) => { ell(g, 'rgba(0,0,0,.28)', 17, 10, 15, 2); R(g, '#5a3318', 3, 3, 28, 7); R(g, '#7a4a26', 3, 3, 28, 2); ell(g, '#c99a56', 4, 6, 2, 3); ell(g, '#8a5a2c', 4, 6, 1, 1); }),
+    drinks: () => mk(56, 52, (g) => {
+      ell(g, 'rgba(0,0,0,.28)', 28, 49, 26, 3);
+      R(g, '#5a3318', 26, 38, 4, 10); ell(g, '#5a3318', 28, 48, 9, 2);
+      ell(g, '#6b4423', 28, 36, 26, 8); ell(g, '#8a5a2c', 28, 35, 25, 7); ell(g, '#a8773d', 24, 33, 14, 3);
+      // boba cup
+      for (let i = 0; i < 22; i++) { const hw = 7 - Math.floor(i * 3 / 22); R(g, '#5a3a48', 16 - hw - 1, 12 + i, hw * 2 + 3, 1); }
+      for (let i = 0; i < 22; i++) { const hw = 7 - Math.floor(i * 3 / 22); R(g, i < 4 ? '#f4fbff' : (i < 17 ? '#e2b88a' : '#d9a67a'), 16 - hw, 12 + i, hw * 2 + 1, 1); }
+      R(g, '#fff6e0', 11, 16, 2, 10);
+      [[11, 28], [14, 29], [17, 28], [12, 31], [15, 31], [18, 30], [13, 26]].forEach((q) => { R(g, '#2a1a12', q[0], q[1], 3, 3); R(g, '#5a4a3a', q[0], q[1], 1, 1); });
+      ell(g, '#e8f4f8', 16, 11, 8, 2); R(g, '#ff5fa2', 19, 0, 2, 13); R(g, '#ff9fc6', 19, 0, 1, 13);
+      // matcha cup
+      for (let i = 0; i < 20; i++) { const hw = 6 - Math.floor(i * 2 / 20); R(g, '#4a5a48', 39 - hw - 1, 14 + i, hw * 2 + 3, 1); }
+      for (let i = 0; i < 20; i++) { const hw = 6 - Math.floor(i * 2 / 20); R(g, i < 3 ? '#e6f2d2' : (i < 10 ? '#a8d08a' : '#7fb36a'), 39 - hw, 14 + i, hw * 2 + 1, 1); }
+      R(g, '#d8f0c8', 35, 18, 2, 8); [[36, 28], [40, 30], [38, 25], [41, 26]].forEach((q) => { R(g, '#f0fbf0', q[0], q[1], 3, 3); R(g, '#ffffff', q[0], q[1], 1, 1); });
+      R(g, '#ffffff', 42, 2, 2, 14); R(g, '#c4c1cd', 42, 2, 1, 14);
+    }),
     cloud: () => mk(56, 18, (g) => { const w = 'rgba(255,244,230,.9)', sh = 'rgba(214,190,200,.9)'; ell(g, sh, 28, 14, 24, 3); ell(g, w, 14, 11, 12, 6); ell(g, w, 28, 8, 14, 7); ell(g, w, 42, 11, 11, 6); R(g, w, 6, 12, 44, 3); }),
     stickBase: () => mk(28, 28, (g) => { ell(g, '#2E1206', 14, 14, 14, 14); ell(g, '#5A2A12', 14, 14, 12, 12); ell(g, '#2E1206', 14, 14, 9, 9); [[13, 2], [13, 24], [2, 13], [24, 13]].forEach((q) => R(g, '#F6CE7B', q[0], q[1], 2, 2)); }),
     stickKnob: () => mk(20, 20, (g) => { ell(g, '#2E1206', 10, 10, 10, 10); ell(g, '#D88A3C', 10, 10, 9, 9); ell(g, '#F6CE7B', 9, 9, 7, 7); ell(g, '#FBE6B8', 7, 7, 3, 2); }),
@@ -204,6 +220,7 @@
     tree1: SPR.tree('#2f6b34', '#3f8a42', '#5aa653'),
     tree2: SPR.tree('#3a6b2e', '#4f8a3a', '#7ab35a'),
     cloud: SPR.cloud(),
+    drinks: SPR.drinks(),
   };
   $('stickBase').src = SPR.stickBase();
   $('stickKnob').src = SPR.stickKnob();
@@ -238,6 +255,7 @@
     { id: 'music', x: 140, y: 254, w: 27, h: 17, src: 'assets/obj_hp.png', stand: [153, 292], kicker: 'On the floor cushion', title: 'What I’m listening to', word: 'album', live: 'music', blurb: 'Usually something cozy while I code.', under: [IMG.poufTeal, 134, 256, 36, 22] },
     { id: 'games', x: 305, y: 286, w: 30, h: 14, src: 'assets/obj_gb.png', stand: [320, 324], kicker: 'On the beanbag', title: 'What I’m playing', word: 'game', live: 'games', blurb: 'Playing games is how I got into making them. It\'s one of my favorite ways to catch up with my friends!', under: [IMG.poufRed, 302, 288, 36, 22] },
     { id: 'crochet', x: 575, y: 298, w: 54, h: 15, src: 'assets/obj_yarn.png', stand: [560, 334], kicker: 'In the yarn basket', title: 'Crochet', word: 'crochet', blurb: 'How I unwind. I love making clothing and stuffed animals.Currently working on a sweater based off my cat!', under: [IMG.basket, 570, 304, 64, 22] },
+    { id: 'drinks', x: 430, y: 205, w: 56, h: 52, src: IMG.drinks, stand: [458, 284], kicker: 'At the café table', title: 'Drink making', word: 'drink', blurb: 'I love boba and matcha. I was a barista for 2 years, so making drinks is second nature to me.' },
     { id: 'cats', cat: true, src: 'assets/cat_portrait.png', kicker: 'Wandering the house', title: 'Astro!', word: 'cat', blurb: 'The love of my life, my cat Astro! His purring on my chest always makes me fall asleep instantly.' },
     { id: 'camping', x: 62, y: 425, w: 84, h: 62, src: IMG.tent, stand: [142, 526], kicker: 'In the backyard', title: 'Camping', word: 'camping', blurb: 'Barbeque, marshmallows, and starry nights. The times spent with my friends next to the campfire are some of my favorites.' },
     { id: 'fish', x: 496, y: 490, w: 47, h: 42, src: 'assets/obj_rod.png', stand: [508, 562], kicker: 'On the dock', title: 'Fishing', word: 'fishing', blurb: 'Quiet mornings on the water, or evenings at the lake. I primarily fresh water fish for bass and crappie.' },
@@ -246,7 +264,7 @@
   // Solid bits: [x1, y1, x2, y2]
   const BLOCKS = [
     [0, 0, 345, 142], [0, 0, 60, 345], [55, 298, 205, 345], [198, 98, 298, 238], [155, 135, 197, 238], [300, 135, 340, 188], [418, 0, 486, 140], [538, 0, 630, 136], [628, 100, 700, 316],
-    [66, 452, 140, 492], [190, 484, 222, 502], [24, 562, 58, 592], [644, 432, 690, 462], [304, 428, 340, 454], [545, 496, 700, 604],
+    [436, 232, 484, 258], [66, 452, 140, 492], [190, 484, 222, 502], [24, 562, 58, 592], [644, 432, 690, 462], [304, 428, 340, 454], [545, 496, 700, 604],
   ];
   function hit(x, y) {
     if (y < 140 || y > 612) return true;
@@ -509,6 +527,7 @@
     else if (id === 'crochet') { emit(o, 'yarn', 7); sfx('select'); }
     else if (id === 'cats') emit({ x: c.x - 8, y: c.y - 62, w: 16, h: 6 }, 'heart', 5);
     else if (id === 'camping') { emit(o, 'spark', 6); sfx('select'); }
+    else if (id === 'drinks') { emit(o, 'bubble', 7); sfx('ding'); }
     else if (id === 'fish') { emit(o, 'splash', 8); sfx('splash'); }
     else emit(o, 'spark', 4);
   }
@@ -861,38 +880,223 @@
     }).catch(() => {});
   }
 
-  /* ---------------- Friends & fun stuff carousel ---------------- */
+  /* ---------------- Friends & fun stuff: the memory claw machine ---------------- */
+  let clawStep = null;
   (function () {
     const list = (CFG.gallery || []).map((g) => (typeof g === 'string' ? { src: g, caption: '' } : g)).filter((g) => g && g.src);
-    const stage = $('galStage'), capEl = $('galCap'), dotsEl = $('galDots'), countEl = $('galCount');
-    if (!list.length) { stage.innerHTML = '<div class="gal-empty">Add photos to <b>gallery</b> in config.js to fill this carousel.</div>'; return; }
-    const n = list.length;
-    let i = 0, paused = false, inView = true, timer = 0;
-    stage.innerHTML = '<img class="gal-img" id="galImg" alt="">' + (n > 1 ? '<button type="button" class="arr arr-l" aria-label="Previous photo"></button><button type="button" class="arr arr-r" aria-label="Next photo"></button>' : '');
-    const img = $('galImg');
-    dotsEl.innerHTML = n > 1 ? list.map((g, k) => '<button type="button" aria-label="Photo ' + (k + 1) + '"></button>').join('') : '';
-    const dots = dotsEl.querySelectorAll('button');
-    function show(k) {
-      i = ((k % n) + n) % n;
-      const g = list[i];
-      img.src = g.src; img.alt = g.caption || ('Photo ' + (i + 1) + ' of ' + n);
-      capEl.textContent = g.caption || '';
-      countEl.textContent = n > 1 ? (i + 1) + ' / ' + n : '';
-      dots.forEach((d, j) => d.setAttribute('aria-current', String(j === i)));
+    const glass = $('clawGlass'), pit = $('pit'), clawEl = $('claw'), cable = $('clawCable'), head = $('clawHead'), msgEl = $('clawMsg'), pol = $('polaroid');
+    const shelf = $('shelfList'), shelfCount = $('shelfCount'), btnL = $('clawL'), btnR = $('clawR'), btnD = $('clawDrop'), allBtn = $('shelfAll');
+    if (!list.length) {
+      pit.innerHTML = '<div class="gal-empty">Add photos to <b>gallery</b> in config.js to fill the claw machine.</div>';
+      $('shelfList').parentNode.hidden = true; return;
     }
-    const go = (d) => { show(i + d); sfx('select'); };
-    stage.querySelectorAll('.arr').forEach((b) => b.addEventListener('click', () => { unlock(); go(b.classList.contains('arr-l') ? -1 : 1); }));
-    dots.forEach((d, j) => d.addEventListener('click', () => { unlock(); show(j); sfx('select'); }));
-    let sx = null;
-    stage.addEventListener('pointerdown', (e) => { sx = e.clientX; });
-    stage.addEventListener('pointerup', (e) => { if (sx !== null && Math.abs(e.clientX - sx) > 40 && n > 1) go(e.clientX < sx ? 1 : -1); sx = null; });
-    const g = $('gallery');
-    ['mouseenter', 'focusin'].forEach((ev) => g.addEventListener(ev, () => { paused = true; }));
-    ['mouseleave', 'focusout'].forEach((ev) => g.addEventListener(ev, () => { paused = false; }));
-    if ('IntersectionObserver' in window) new IntersectionObserver((es) => { inView = es[0].isIntersecting; }, { threshold: 0.3 }).observe(g);
-    const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (n > 1 && !calm) timer = setInterval(() => { if (!paused && inView) show(i + 1); }, 5000);
-    show(0);
+    const N = list.length;
+    const clawSpr = (open) => mk(24, 20, (g) => {
+      R(g, '#8a8794', 10, 0, 4, 3); R(g, '#c4c1cd', 8, 3, 8, 5); R(g, '#5a5866', 8, 7, 8, 1); R(g, '#e8e6f0', 9, 3, 2, 3);
+      let last = 0;
+      for (let k = 0; k < 10; k++) { const dx = open ? Math.round(k * 0.75) : -Math.round(k * 0.15); last = dx; R(g, '#c4c1cd', 7 - dx, 8 + k, 3, 1); R(g, '#c4c1cd', 14 + dx, 8 + k, 3, 1); R(g, '#8a8794', 7 - dx, 8 + k, 1, 1); R(g, '#8a8794', 16 + dx, 8 + k, 1, 1); }
+      R(g, '#e8e6f0', 8 - last + (open ? 2 : 1), 17, 2, 2); R(g, '#e8e6f0', 14 + last - (open ? 2 : 1), 17, 2, 2);
+    });
+    const OPEN = clawSpr(true), CLOSED = clawSpr(false);
+    head.src = OPEN;
+    const HH = 60;
+    const BALLS = ["#ff5fa2", "#4de0d0", "#F6CE7B", "#b58ad6", "#7fb7c9", "#e8664f", "#8cc28a"];
+    const prizes = list.map((g, k) => {
+      const el = document.createElement('div');
+      el.className = 'prize';
+      const lab = String(g.label || (g.caption || '').split(/\s+/)[0].replace(/[^\w'-]/g, '') || (k + 1)).slice(0, 10);
+      el.setAttribute('role', 'img'); el.setAttribute('aria-label', 'Prize ball: ' + (g.caption || ('Memory ' + (k + 1))));
+      el.style.setProperty('--c', BALLS[k % BALLS.length]);
+      el.innerHTML = '<span class="ball-t">' + esc(lab) + '</span><img class="ball-photo" alt="" src="' + esc(g.src) + '">';
+      pit.appendChild(el);
+      return { k, el, s: 80, cw: 88, ch: 100, hx: 0, hy: 0, vx: 0, vy: 0, held: false, taken: false };
+    });
+    const rnd = rng(33);
+    const homes = prizes.map(() => ({ jx: (rnd() - 0.5) * 12, jy: (rnd() - 0.5) * 6, rot: 0 }));
+    const got = new Set();
+    let gw = 0, gh = 0, cx = 0, tx = 0, hy = 0, railY = 0, restY = 0, minX = 0, maxX = 0, chuteX = 0, chuteY = 0, stopY = 0;
+    let wanted = null, st = 'idle', stT = 0, target = null, carried = null, queueDrop = false, polOpen = false, keyL = false, keyR = false, bL = false, bR = false, stepT = 0, msgT = 0;
+    const setMsg = (t) => { msgEl.textContent = t; };
+    let physAwake = 0;
+    function setZ(p) { p.el.style.zIndex = String(1 + Math.min(9, Math.max(0, Math.floor(p.hy / gh * 10)))); }
+    function physics(dt, silent) {
+      const live = prizes.filter((p) => !p.held && !p.taken);
+      const g = gh * 3.2, floorY = gh * 0.93, lx = gw * 0.2, rx = gw - 6;
+      live.forEach((p) => { p.vy += g * dt; p.hx += p.vx * dt; p.hy += p.vy * dt; p.vx *= 0.995; });
+      for (let it = 0; it < 4; it++) {
+        for (let i = 0; i < live.length; i++) for (let j = i + 1; j < live.length; j++) {
+          const a = live[i], b = live[j], dx = b.hx - a.hx, dy = b.hy - a.hy, d = Math.hypot(dx, dy), min = (a.s + b.s) / 2;
+          if (d >= min) continue;
+          const nx = d < 0.01 ? 0 : dx / d, ny = d < 0.01 ? 1 : dy / d, pen = min - d;
+          a.hx -= nx * pen / 2; a.hy -= ny * pen / 2; b.hx += nx * pen / 2; b.hy += ny * pen / 2;
+          const rv = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+          if (rv < 0) { const k2 = -rv * 0.55; a.vx -= nx * k2; a.vy -= ny * k2; b.vx += nx * k2; b.vy += ny * k2; }
+        }
+        live.forEach((p) => {
+          const r = p.s / 2;
+          if (p.hy > floorY - r) { p.hy = floorY - r; if (p.vy > 0) p.vy *= -0.15; p.vx *= 0.85; }
+          if (p.hx < lx + r) { p.hx = lx + r; if (p.vx < 0) p.vx *= -0.2; }
+          if (p.hx > rx - r) { p.hx = rx - r; if (p.vx > 0) p.vx *= -0.2; }
+        });
+      }
+      let fast = 0; live.forEach((p) => { fast = Math.max(fast, Math.hypot(p.vx, p.vy)); });
+      if (!silent) { live.forEach((p) => { place(p, p.hx, p.hy); setZ(p); }); if (fast > 25) physAwake = Math.max(physAwake, 0.25); }
+      return fast;
+    }
+    function place(p, x, y) { p.el.style.left = (x - p.s / 2).toFixed(1) + 'px'; p.el.style.top = (y - p.s * 0.5).toFixed(1) + 'px'; }
+    function layout() {
+      const w = glass.clientWidth, h = glass.clientHeight;
+      if (!w || !h) return;
+      const fx = gw ? cx / gw : 0.5, ft = gw ? tx / gw : 0.5;
+      gw = w; gh = h;
+      railY = gh * 0.06 + 3; restY = railY + 4;
+      minX = gw * 0.07; maxX = gw * 0.93;
+      chuteX = gw * 0.105; chuteY = gh * 0.86;
+      const left = gw * 0.24, regW = gw * 0.95 - left, cols = gw < 520 ? 3 : Math.max(Math.min(N, 5), Math.ceil(N / 3));
+      const ts = Math.min(104, regW / cols * 1.05, gw * 0.19, Math.sqrt(regW * gh * 0.36 / N)), floor = gh * 0.93;
+      prizes.forEach((p, i) => {
+        const r = Math.floor(i / cols), c = i % cols, inRow = Math.min(cols, N - r * cols), rowW = regW * (inRow / cols);
+        p.s = ts; p.cw = ts * 1.1; p.ch = ts * 1.25; p.vx = 0; p.vy = 0;
+        p.hx = left + (regW - rowW) / 2 + (c + 0.5) * (rowW / inRow) + homes[i].jx;
+        p.hy = floor - ts * 0.5 - r * ts * 0.78 + homes[i].jy;
+        if (!p.held) { p.el.style.width = ts + 'px'; p.el.style.height = ts + 'px'; }
+      });
+      for (let n = 0; n < 160; n++) physics(1 / 60, true);
+      physAwake = 1;
+      prizes.forEach((p) => { if (!p.held && !p.taken) { place(p, p.hx, p.hy); setZ(p); } });
+      cx = fx * gw; tx = ft * gw;
+      if (st === 'idle') hy = restY;
+      draw();
+    }
+    function draw() {
+      clawEl.style.left = cx.toFixed(1) + 'px';
+      cable.style.top = railY.toFixed(1) + 'px'; cable.style.height = Math.max(0, hy - railY).toFixed(1) + 'px';
+      head.style.top = hy.toFixed(1) + 'px';
+      if (carried) { carried.el.style.left = (cx - carried.cw / 2).toFixed(1) + 'px'; carried.el.style.top = (hy + 38).toFixed(1) + 'px'; }
+    }
+    function renderShelf() {
+      shelf.innerHTML = list.map((g, k) => got.has(k)
+        ? '<button type="button" class="shelf-item" data-k="' + k + '" aria-label="Open memory: ' + esc(g.caption || ('Photo ' + (k + 1))) + '"><img alt="" src="' + esc(g.src) + '"></button>'
+        : '<span class="shelf-item locked" aria-hidden="true">?</span>').join('');
+      shelfCount.textContent = got.size + ' / ' + N;
+      allBtn.textContent = got.size >= N ? 'Refill machine' : 'Show all';
+      shelf.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => { unlock(); if (st === 'idle') showPol(+b.dataset.k, true); }));
+    }
+    function showPol(k, fromShelf) {
+      const g = list[k];
+      polOpen = true;
+      pol.innerHTML = '<div class="pol-card"><img alt="' + esc(g.caption || ('Memory ' + (k + 1))) + '" src="' + esc(g.src) + '"><p>' + esc(g.caption || ('Memory ' + (k + 1))) + '</p><button type="button" class="btn btn-wood pol-x">Back to the claw</button></div>';
+      pol.hidden = false; sfx('open');
+      pol.querySelector('.pol-x').addEventListener('click', (e) => { e.stopPropagation(); closePol(); });
+      pol.querySelector('.pol-x').focus({ preventScroll: true });
+      if (!fromShelf) { got.add(k); renderShelf(); if (got.size === N) { setMsg('You collected every memory!'); sfx('quest'); } }
+    }
+    function closePol() { if (!polOpen) return; polOpen = false; pol.hidden = true; sfx('close'); setMsg(got.size >= N ? 'Machine empty! Tap Refill to play again.' : 'Grab another memory!'); glass.focus({ preventScroll: true }); }
+    pol.addEventListener('click', (e) => { e.stopPropagation(); closePol(); });
+
+    function calcStop() { stopY = target ? (target.hy - target.s * 0.5) - HH + 24 : gh * 0.84 - HH; }
+    function startDrop() {
+      if (wanted && !wanted.taken && !wanted.held) target = wanted;
+      else {
+        const near = prizes.filter((p) => !p.taken && !p.held && Math.abs(p.hx - cx) < p.s * 0.5);
+        near.sort((a, b) => a.hy - b.hy);
+        target = near[0] || null;
+      }
+      wanted = null;
+      calcStop();
+      st = 'drop'; sfx('cast'); setMsg('Going down...');
+    }
+    function release() {
+      const p = carried; carried = null;
+      const k = p.k;
+      p.el.classList.remove('held'); p.el.classList.add('falling');
+      p.el.style.left = (chuteX - p.cw / 2) + 'px'; p.el.style.top = (chuteY - p.ch * 0.4) + 'px';
+      setTimeout(() => { sfx('catch'); showPol(k, false); }, 650);
+      setTimeout(() => { p.el.classList.remove('falling'); p.el.hidden = true; p.held = false; p.taken = true; physAwake = 3; }, 700);
+    }
+    clawStep = function (dt) {
+      if (!gw) { layout(); return; }
+      if (physAwake > 0) { physAwake -= dt; physics(dt); if (physAwake <= 0) prizes.forEach((p) => { p.vx = 0; p.vy = 0; }); }
+      const sp = gw * 0.8;
+      if (st === 'idle') {
+        if (!polOpen) {
+          const d = (keyR || bR ? 1 : 0) - (keyL || bL ? 1 : 0);
+          if (d) tx = Math.max(minX, Math.min(maxX, tx + d * sp * dt));
+          const dx = tx - cx;
+          if (Math.abs(dx) > 0.5) {
+            cx += Math.min(Math.abs(dx), sp * dt) * Math.sign(dx);
+            stepT += dt; if (stepT > 0.16) { stepT = 0; sfx('step'); }
+          } else if (queueDrop) { queueDrop = false; startDrop(); }
+        } else queueDrop = false;
+      } else if (st === 'drop') {
+        calcStop(); hy += gw * 0.55 * dt;
+        if (hy >= stopY) { hy = stopY; st = 'grab'; stT = 0; head.src = CLOSED; sfx('select'); }
+      } else if (st === 'grab') {
+        stT += dt;
+        if (stT > 0.4) {
+          if (target) { carried = target; target.held = true; target.taken = true; target.el.classList.add('held'); target.el.style.width = target.cw + 'px'; target.el.style.height = target.ch + 'px'; physAwake = 3; setMsg('Got one!'); }
+          st = 'rise';
+        }
+      } else if (st === 'rise') {
+        hy -= gw * 0.5 * dt;
+        if (hy <= restY) {
+          hy = restY;
+          if (carried) st = 'haul';
+          else { st = 'idle'; head.src = OPEN; tx = cx; sfx('miss'); setMsg('Missed! Try again.'); }
+        }
+      } else if (st === 'haul') {
+        const dx = chuteX - cx;
+        cx += Math.min(Math.abs(dx), gw * 0.55 * dt) * Math.sign(dx);
+        if (Math.abs(chuteX - cx) < 1.5) { cx = chuteX; st = 'release'; stT = 0; head.src = OPEN; release(); }
+      } else if (st === 'release') {
+        stT += dt;
+        if (stT > 0.8) { st = 'idle'; tx = cx; queueDrop = false; }
+      }
+      draw();
+    };
+
+    /* input: click the glass, arrow keys + space, or the buttons */
+    const clampX = (v) => Math.max(minX, Math.min(maxX, v));
+    glass.addEventListener('pointermove', (e) => { if (st !== 'idle' || polOpen || wanted || e.pointerType === 'touch') return; tx = clampX(e.clientX - glass.getBoundingClientRect().left); });
+    glass.addEventListener('click', (e) => {
+      unlock(); glass.focus({ preventScroll: true });
+      if (polOpen || st !== 'idle') return;
+      const ballEl = e.target.closest && e.target.closest('.prize');
+      const ball = ballEl && prizes.find((p) => p.el === ballEl && !p.taken && !p.held);
+      if (ball) { wanted = ball; tx = clampX(ball.hx); }
+      else { wanted = null; tx = clampX(e.clientX - glass.getBoundingClientRect().left); }
+      queueDrop = true;
+    });
+    glass.addEventListener('keydown', (e) => {
+      if (polOpen) { if (e.key === 'Escape') closePol(); return; }
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') { e.preventDefault(); unlock(); keyL = true; }
+      else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') { e.preventDefault(); unlock(); keyR = true; }
+      else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); unlock(); if (st === 'idle' && !e.repeat) { queueDrop = true; tx = cx; } }
+    });
+    glass.addEventListener('keyup', (e) => { if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keyL = false; if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keyR = false; });
+    glass.addEventListener('blur', () => { keyL = keyR = false; });
+    const hold = (b, set) => { b.addEventListener('pointerdown', (e) => { e.preventDefault(); unlock(); set(true); }); ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, () => set(false))); };
+    hold(btnL, (v) => { bL = v; }); hold(btnR, (v) => { bR = v; });
+    btnD.addEventListener('click', () => { unlock(); if (st === 'idle' && !polOpen) { queueDrop = true; tx = cx; } });
+    allBtn.addEventListener('click', () => {
+      unlock();
+      if (got.size >= N) {
+        if (st !== 'idle' || polOpen) return;
+        got.clear(); sfx('open');
+        prizes.forEach((p) => { p.taken = false; p.held = false; p.el.hidden = false; p.el.classList.remove('pop'); void p.el.offsetWidth; p.el.classList.add('pop'); });
+        layout();
+        setMsg('Machine refilled!');
+      } else {
+        if (st !== 'idle') return;
+        list.forEach((g, k) => { got.add(k); prizes[k].taken = true; prizes[k].el.hidden = true; });
+        sfx('quest'); setMsg('Machine emptied. Every memory is on the shelf.');
+      }
+      renderShelf();
+    });
+
+    if ('ResizeObserver' in window) new ResizeObserver(layout).observe(glass); else window.addEventListener('resize', layout);
+    renderShelf(); layout();
+    setMsg('Grab a memory!');
   })();
 
   /* ---------------- Life: twinkling stars and panels that slide in ---------------- */
@@ -917,6 +1121,7 @@
     const dt = last ? Math.min(0.05, (t - last) / 1000) : 0.016; last = t;
     stepHouse(dt);
     stepMallow(dt);
+    if (clawStep) clawStep(dt);
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);

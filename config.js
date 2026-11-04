@@ -17,6 +17,7 @@ window.SITE_CONFIG = {
     crochet: ['assets/crochet1.png', 'assets/crochet2.png', 'assets/crochet3.png'],
     cats:    ['assets/astro1.png', 'assets/astro2.png', 'assets/astro3.png'],
     tv:      [],
+    drinks:  [],   // boba, matcha, barista photos
     camping: ["assets/camping1.jpg", "assets/camping2.jpg", "assets/camping3.png"],
     fish:    ["assets/fishing1.png", "assets/fishing2.png", "assets/fishing3.png"],
     music:   [],   // extra photos. Album art (set up Last.fm below) is added first, automatically.
@@ -26,8 +27,12 @@ window.SITE_CONFIG = {
   // The "Friends & fun stuff" carousel in the About section. Add as many as you like.
   // Each one is { src: 'assets/file.jpg', caption: 'Short caption' }  (caption is optional)
   gallery: [
-    // { src: 'assets/friends1.jpg', caption: 'Women in Computing social' },
-    // { src: 'assets/friends2.jpg', caption: 'Hackathon night' },
+     { src: 'assets/friends1.png', caption: 'Hiking with friends!', label: 'Hiking' },
+     { src: 'assets/friends2.jpg', caption: 'Halloween 2026!', label: 'Halloween' },
+     { src: 'assets/friends3.png', caption: 'Women in Computing at Cornell Hangout!', label: 'WICC' },
+     { src: 'assets/friends4.png', caption: 'My Chinese Student Association (CSA) Family', label: 'CSA' },
+     { src: 'assets/friends5.jpg', caption: 'Going to PAX East via the Development in Games Association at Cornell!', label: 'PAX' },
+
   ],
 
   // What the TV in the house says you're watching

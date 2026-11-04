@@ -215,15 +215,35 @@
             <h2>A little about me</h2>
             <p>CS major with a psychology minor, class of 2029. Psychology is why I care how people feel using what I
               make. I'm also social director for Women in Computing at Cornell, planning events for 50+ people.</p>
-            <p>Off the keyboard: crochet, baking, fishing, video games and Brooklyn Nine-Nine reruns.</p>
+            <p>Off the keyboard: crochet, baking, making boba and matcha, fishing, video games and Brooklyn Nine-Nine reruns.</p>
             <span class="inventory-title">Inventory</span>
             <div class="inventory" id="inventory"></div>
           </div>
         </div>
-        <div class="sv gallery" id="gallery" role="region" aria-roledescription="carousel" aria-label="Friends and fun stuff">
-          <div class="gal-head"><h2>Friends &amp; fun stuff</h2><span class="gal-count" id="galCount"></span></div>
-          <div class="gal-stage" id="galStage"></div>
-          <div class="gal-foot"><p class="gal-cap" id="galCap" aria-live="polite"></p><div class="gal-dots" id="galDots"></div></div>
+        <div class="sv arcade" id="gallery" role="region" aria-label="Memory claw machine with friends and fun stuff">
+          <div class="arc-head"><h2>Friends &amp; fun stuff</h2><span>Grab a memory with the claw. Click the glass, or use the arrow keys and Space.</span></div>
+          <div class="cab">
+            <div class="cab-sign" aria-hidden="true"><b>MEMORY CLAW</b></div>
+            <div class="cab-glass" id="clawGlass" tabindex="0" role="application" aria-label="Claw machine. Left and right arrow keys move the claw. Space or Enter drops it. You can also click the glass.">
+              <div class="claw-rail" aria-hidden="true"></div>
+              <div class="claw" id="claw" aria-hidden="true"><i class="claw-cable" id="clawCable"></i><img class="claw-head" id="clawHead" alt=""></div>
+              <div class="pit" id="pit"></div>
+              <div class="chute" aria-hidden="true"><span>PRIZE</span></div>
+              <div class="claw-msg" id="clawMsg" aria-live="polite"></div>
+              <div class="polaroid" id="polaroid" role="dialog" aria-label="Memory" hidden></div>
+              <i class="glare" aria-hidden="true"></i>
+            </div>
+            <div class="cab-panel">
+              <button type="button" class="arc-btn" id="clawL" aria-label="Move claw left"></button>
+              <button type="button" class="arc-btn r" id="clawR" aria-label="Move claw right"></button>
+              <button type="button" class="arc-drop" id="clawDrop">DROP</button>
+              <span class="coin" aria-hidden="true">INSERT COIN</span>
+            </div>
+          </div>
+          <div class="shelf">
+            <div class="shelf-head"><b>Prize shelf</b><span id="shelfCount"></span><button type="button" class="shelf-all btn btn-wood" id="shelfAll">Show all</button></div>
+            <div class="shelf-list" id="shelfList"></div>
+          </div>
         </div>
       </div>
     </section>
