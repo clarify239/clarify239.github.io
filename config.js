@@ -40,21 +40,21 @@ window.SITE_CONFIG = {
   watching: { title: 'Brooklyn Nine-Nine', note: 'A rewatch. Again. Nine-Nine!' },
 
   // Fill these in as the fallback "now playing" / "recently played" text
-  nowPlaying: { song: '[Song title]', artist: '[Artist]' },
+  nowPlaying: { song: 'White Keys', artist: 'Dominic Fike' },
   recentGame: { name: 'Overwatch', hours: '346 hrs on record' },
 
   // Live Spotify via Last.fm (free): connect Spotify to Last.fm, then get an API key at
   // https://www.last.fm/api/account/create and fill in both values below.
-  lastfm: { user: '', apiKey: '' },
+  lastfm: { user: 'clarify23', apiKey: 'e06029a70946825712a5fbb27a99cb50' },
 
 
   // Project links and media for the fishing cards ('' hides a link / shows a placeholder)
   projects: {
     ai:      { link: '', github: '', media: '' },
-    veil:    { link: '', github: '', media: '' },
-    bracket: { link: '', github: '', media: '' },
+    veil:    { link: '', github: 'https://github.com/cornelldga/Veil-Sur', media: 'assets/veil-sur1.png' },
+    bracket: { link: 'https://www.youtube.com/watch?v=s3lrdF7qWwE', github: 'https://github.com/clarify239/cs3110-final', media: 'assets/bracket-city.png' },
     xr:      { link: '', github: '', media: '' },
     ops:     { link: '', github: '', media: '' },
-    brew:    { link: '', github: '', media: '' },
+    brew:    { link: 'https://armenianbro.itch.io/brewhaha', github: 'https://github.com/clarify239/brewhaha', media: 'assets/brew.png' },
   },
 };
