@@ -607,3 +607,13 @@ button.pin:hover { transform: rotate(0deg) translateY(-3px); }
 .credit-fold p { margin: .4rem 0 0; font-size: .75rem; color: rgba(230,220,200,.6); }
 .credit-fold a { color: rgba(246,206,123,.75); }
 .credits > a { font-size: .75rem; color: rgba(246,206,123,.6); }
+
+/* ---- contact icons ---- */
+.ico { display: inline-block; width: 1.15em; height: 1.15em; vertical-align: -.2em; margin-right: .5em; flex: none; }
+.btn .ico { width: 1.2em; height: 1.2em; }
+.btn-sq { padding: .6rem .7rem; }
+.btn-sq .ico { margin: 0; width: 1.4em; height: 1.4em; vertical-align: -.3em; }
+.nav-ico { display: inline-flex; align-items: center; gap: .15rem; margin-left: .4rem; }
+.nav-ico a { display: inline-flex; padding: .55rem .5rem; color: var(--cream); }
+.nav-ico a:hover { color: #fff; transform: translateY(-2px); }
+.nav-ico .ico { width: 1.5rem; height: 1.5rem; margin: 0; }

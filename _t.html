@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Claire Cheng · Portfolio</title>
+  <meta name="description"
+    content="Claire Cheng: CS student at Cornell building games, XR and AI tools. A cozy pixel-art portfolio you can walk around in.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href="#top" class="logo">Claire Cheng</a>
+      <nav aria-label="Main">
+        <a class="navlink" href="#home">Home</a>
+        <a class="navlink" href="#work">Projects</a>
+        <a class="navlink" href="#experience">Experience</a>
+        <a class="navlink" href="#about">About</a>
+        <button class="navlink" id="soundBtn" type="button" aria-pressed="true">Sound: on</button>
+        <span class="nav-ico">
+          <a href="mailto:cqc6@cornell.edu" class="js-hi" aria-label="Email Claire" title="Email"><span class="ico" data-ico="mail" aria-hidden="true"></span></a>
+          <a href="https://linkedin.com/in/claireqcheng" target="_blank" rel="noopener" aria-label="LinkedIn profile" title="LinkedIn"><span class="ico" data-ico="in" aria-hidden="true"></span></a>
+          <a href="#" class="js-gh" target="_blank" rel="noopener" aria-label="GitHub profile" title="GitHub"><span class="ico" data-ico="gh" aria-hidden="true"></span></a>
+        </span>
+        <a class="btn btn-gold" id="resumeLink" href="resume.pdf" target="_blank" rel="noopener"
+          style="margin-left:.75rem">Resume</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Title screen -->
+    <section class="scene title" aria-label="Title screen">
+      <div class="bg dusk" aria-hidden="true">
+        <div class="sky-city"></div>
+        <div class="bld-city"></div>
+        <div class="near-city"></div>
+      </div>
+      <div class="shade" aria-hidden="true" style="background:rgba(18,12,30,.35)"></div>
+      <div class="title-inner">
+        <span class="title-kicker">a portfolio by</span>
+        <h1>Claire Cheng</h1>
+        <p>CS @ Cornell</p>
+        <div class="actions">
+          <button type="button" class="btn btn-gold blink" id="startBtn">Press Start</button>
+          <button type="button" class="btn btn-wood" id="quickBtn">Quick view</button>
+        </div>
+        <span class="title-hint">Press Start to play. Quick view goes straight to projects.</span>
+      </div>
+    </section>
+
+    <!-- House -->
+    <section class="scene home" id="home">
+      <div class="bg golden" aria-hidden="true">
+        <div class="sky-city"></div>
+        <div class="bld-city"></div>
+        <div class="near-city"></div>
+      </div>
+      <div class="shade" aria-hidden="true" style="background:rgba(34,20,12,.38)"></div>
+      <div class="wrap">
+        <div class="sv intro">
+          <div class="intro-text">
+            <span class="status">Open to summer 2027 internships</span>
+            <h2>Hi, I'm Claire. Come on in.</h2>
+            <p>I study CS at Cornell and build games, XR and AI tools. That's me in the blue. Walk me around the house
+              and out to the backyard to see what I do for fun, then head down to the lake to fish up my projects.</p>
+          </div>
+          <div class="actions">
+            <a href="#work" class="btn btn-gold">Go fishing</a>
+            <a href="mailto:cqc6@cornell.edu" class="btn btn-wood js-hi"><span class="ico" data-ico="mail" aria-hidden="true"></span>Email me</a>
+            <a href="https://linkedin.com/in/claireqcheng" target="_blank" rel="noopener" class="btn btn-wood btn-sq" aria-label="LinkedIn profile" title="LinkedIn"><span class="ico" data-ico="in" aria-hidden="true"></span></a>
+            <a href="#" class="btn btn-wood btn-sq js-gh" target="_blank" rel="noopener" aria-label="GitHub profile" title="GitHub"><span class="ico" data-ico="gh" aria-hidden="true"></span></a>
+          </div>
+        </div>
+        <div class="console" id="console">
+          <div class="jc jc-l">
+            <span class="jc-mini" aria-hidden="true"><i class="jc-minus"></i></span>
+            <div class="stick" id="stick" role="group"
+              aria-label="Joystick. Drag it to walk. Keyboard players can use the arrow keys or WASD.">
+              <img class="stick-base" id="stickBase" alt="">
+              <img class="stick-knob" id="stickKnob" alt="">
+            </div>
+            <span class="jc-cap" aria-hidden="true">Move</span>
+          </div>
+
+          <div class="console-mid">
+            <div class="viewport" id="vp" tabindex="0" role="application"
+              aria-label="Claire's house and backyard. Use the joystick, the arrow keys or WASD to walk, or click where to go. Walk up to a glowing object or click it to learn more.">
+              <div class="world" id="world">
+                <img class="room" src="assets/room.png" alt="">
+                <button type="button" class="cat" id="cat" aria-label="Say hi to the cat"><span id="catSpr"
+                    class="idle"></span></button>
+                <div class="lia idle" id="lia" aria-hidden="true"></div>
+              </div>
+              <div class="daynight" aria-hidden="true"></div>
+              <div class="crt" aria-hidden="true"></div>
+              <button type="button" class="tod" id="tod" aria-label="Change the time of day">Time: Auto</button>
+              <div class="hud" id="hud" aria-hidden="true">Home</div>
+              <div class="sv dialog" id="dialog" role="dialog" aria-live="polite" hidden></div>
+            </div>
+          </div>
+
+          <div class="jc jc-r">
+            <span class="jc-mini" aria-hidden="true"><i class="jc-plus"></i></span>
+            <div class="abxy" role="group" aria-label="Action buttons">
+              <button type="button" class="gbtn gb-x" data-btn="x" aria-label="X: next photo"
+                title="Next photo (])">X</button>
+              <button type="button" class="gbtn gb-y" data-btn="y" aria-label="Y: previous photo"
+                title="Previous photo ([)">Y</button>
+              <button type="button" class="gbtn gb-a" data-btn="a" aria-label="A: talk to whatever is nearby"
+                title="Talk (E)">A</button>
+              <button type="button" class="gbtn gb-b" data-btn="b" aria-label="B: close" title="Close (Esc)">B</button>
+            </div>
+            <span class="jc-cap" aria-hidden="true">A talk · B back<br>X Y photos</span>
+          </div>
+        </div>
+        <p class="house-hint">Joystick, WASD or arrow keys to walk, or click the screen. E talks, Esc closes. Anything
+          glowing has a story. Don't forget the backyard.</p>
+      </div>
+    </section>
+
+    <!-- Fishing -->
+    <section class="scene work" id="work">
+      <div class="bg sunset" aria-hidden="true">
+        <div class="sky-mtn"></div>
+        <div class="far-mtn"></div>
+        <div class="near-mtn"></div>
+      </div>
+      <div class="shade" aria-hidden="true" style="background:rgba(40,16,22,.4)"></div>
+      <div class="wrap">
+        <div class="sv work-head">
+          <h2>Fishing for projects</h2>
+          <span>Click anywhere on the water to cast, then click again when it bites. Pick a fish in the guide to aim for
+            a specific one.</span>
+        </div>
+        <div class="fishing">
+          <div class="sv guide">
+            <div class="guide-head"><strong>Fish Guide</strong><span id="caughtCount">0 / 6 caught</span></div>
+            <div class="guide-list" id="guide" role="radiogroup" aria-label="Choose a fish to catch"></div>
+          </div>
+          <div class="lake-col">
+            <div class="svd">
+              <div class="lake" id="lake" tabindex="0" role="application"
+                aria-label="Fishing lake. Click anywhere on the water to cast, or press Enter. Click or press Enter again when a fish bites.">
+                <div class="sky sunset" aria-hidden="true">
+                  <div class="s1"></div>
+                  <div class="s2"></div>
+                </div>
+                <div class="water" aria-hidden="true"></div>
+                <div class="deep" aria-hidden="true"></div>
+                <div class="warm" aria-hidden="true"></div>
+                <div class="waves w1" aria-hidden="true"></div>
+                <div class="waves w2" aria-hidden="true"></div>
+                <div class="waves w3" aria-hidden="true"></div>
+                <div class="boat" aria-hidden="true">
+                  <div class="cat-sit"></div><img src="assets/boat.png" alt="">
+                </div>
+                <img class="bobber" id="bobber" src="assets/bobber.png" alt="" hidden>
+                <img class="bang" id="bang" src="assets/bang.png" alt="" hidden>
+                <img class="leap" id="leap" src="" alt="" hidden>
+                <div class="rod r-idle" id="rod" aria-hidden="true"></div>
+                <div class="sv lake-msg" id="lakeMsg" aria-live="polite">Click anywhere on the water to cast.</div>
+                <div class="sv caught" id="caughtBanner" hidden></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <article class="sv card" id="card" aria-live="polite" hidden></article>
+      </div>
+    </section>
+
+    <!-- Experience + About -->
+    <section class="scene lower">
+      <div class="bg dusk" aria-hidden="true">
+        <div class="sky-city"></div>
+        <div class="bld-city"></div>
+      </div>
+      <div class="shade" aria-hidden="true" style="background:rgba(20,16,40,.45)"></div>
+      <div class="wrap">
+        <div class="exp" id="experience">
+          <h2>Where I've worked</h2>
+          <ol>
+            <li class="sv"><span class="dates">Aug 2026 to now</span>
+              <div class="role"><b>AI Studio Fellow · Accenture</b>
+                <p>Building a contract review tool with six other fellows and an Accenture engineer.</p>
+              </div>
+            </li>
+            <li class="sv"><span class="dates">Oct 2026 to now</span>
+              <div class="role"><b>Project Teams App Developer · Cornell Engineering</b>
+                <p>Keeping the Ops Hub running and building a directory of all 36 project teams.</p>
+              </div>
+            </li>
+            <li class="sv"><span class="dates">May 2026 to now</span>
+              <div class="role"><b>Programmer · DGA Studios</b>
+                <p>Dialogue, tutorial and UI systems for Veil-Sur in Unity.</p>
+              </div>
+            </li>
+            <li class="sv"><span class="dates">Nov 2025 to now</span>
+              <div class="role"><b>Software Team Member · Cornell Extended Reality</b>
+                <p>VR scenes with real-time scent feedback, and now a smart-glasses memory app.</p>
+              </div>
+            </li>
+            <li class="sv"><span class="dates">Jun to Aug 2026</span>
+              <div class="role"><b>Assistive Technology Intern · Young Adult Institute</b>
+                <p>An accessible route planner built on Google Maps and NYC Open Data.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <div class="about" id="about">
+          <div class="sv about-photo" id="aboutPhoto"></div>
+          <div class="sv about-text">
+            <h2>A little about me</h2>
+            <p>CS major with a psychology minor, class of 2029. Psychology is why I care how people feel using what I
+              make. I'm also social director for Women in Computing at Cornell, planning events for 50+ people.</p>
+            <p>Off the keyboard: crochet, baking, making boba and matcha, fishing, video games and Brooklyn Nine-Nine
+              reruns.</p>
+            <span class="inventory-title">Inventory</span>
+            <div class="inventory" id="inventory"></div>
+          </div>
+        </div>
+        <div class="sv arcade" id="gallery" role="region" aria-label="Memory claw machine with friends and fun stuff">
+          <div class="arc-head">
+            <h2>Learn more about me!</h2><span>Grab a memory with the claw and it gets pinned to the wall. Click a
+              ball, click the glass, or use the arrow keys and Space.</span>
+          </div>
+          <div class="cab">
+            <div class="cab-sign" aria-hidden="true"><b>MEMORY CLAW</b></div>
+            <div class="cab-glass" id="clawGlass" tabindex="0" role="application"
+              aria-label="Claw machine. Left and right arrow keys move the claw. Space or Enter drops it. You can also click the glass.">
+              <div class="claw-rail" aria-hidden="true"></div>
+              <div class="claw" id="claw" aria-hidden="true"><i class="claw-cable" id="clawCable"></i><img
+                  class="claw-head" id="clawHead" alt=""></div>
+              <div class="pit" id="pit"></div>
+              <div class="chute" aria-hidden="true"><span>PRIZE</span></div>
+              <div class="claw-msg" id="clawMsg" aria-live="polite"></div>
+              <div class="polaroid" id="polaroid" role="dialog" aria-label="Memory" hidden></div>
+              <i class="glare" aria-hidden="true"></i>
+            </div>
+            <div class="cab-panel">
+              <button type="button" class="arc-btn" id="clawL" aria-label="Move claw left"></button>
+              <button type="button" class="arc-btn r" id="clawR" aria-label="Move claw right"></button>
+              <button type="button" class="arc-drop" id="clawDrop">DROP</button>
+              <span class="coin" aria-hidden="true">INSERT COIN</span>
+            </div>
+          </div>
+          <div class="shelf">
+            <div class="score" aria-label="Scoreboard"><span>Memories <b id="scMem">0</b></span><span>Tries <b
+                  id="scTry">0</b></span><span>Best <b id="scBest">-</b></span></div>
+            <div class="board" id="board">
+              <div class="board-list" id="shelfList"></div>
+            </div>
+            <div class="note" id="note" aria-live="polite"><b id="noteTitle"></b>
+              <p id="noteText"></p>
+            </div>
+            <div class="board-foot"><span id="shelfCount"></span><button type="button" class="shelf-all btn btn-wood"
+                id="shelfAll">Show all</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="scene contact">
+      <div class="bg night" aria-hidden="true">
+        <div class="sky-city"></div>
+        <div class="bld-city"></div>
+        <div class="near-city"></div>
+      </div>
+      <div class="shade" aria-hidden="true" style="background:rgba(8,10,28,.5)"></div>
+      <div class="wrap">
+        <div class="sv contact-card">
+          <div style="display:flex;flex-direction:column;gap:.9rem">
+            <h2>Let's make something together.</h2>
+            <p>I'm looking for summer 2027 internships in software engineering and applied AI. Email is the quickest way
+              to reach me.</p>
+          </div>
+          <div class="actions">
+            <a href="mailto:cqc6@cornell.edu" class="btn btn-gold js-hi"><span class="ico" data-ico="mail" aria-hidden="true"></span>cqc6@cornell.edu</a>
+            <a href="https://linkedin.com/in/claireqcheng" target="_blank" rel="noopener"
+              class="btn btn-wood"><span class="ico" data-ico="in" aria-hidden="true"></span>LinkedIn</a>
+            <a href="#" id="githubLink" target="_blank" rel="noopener" class="btn btn-wood js-gh"><span class="ico" data-ico="gh" aria-hidden="true"></span>GitHub</a>
+          </div>
+        </div>
+        <footer class="credits">
+          <details class="credit-fold">
+            <summary>Art credits</summary>
+            <p>House: <a href="https://marie-pepo.itch.io/cosy-cabin">Cosy Cabin</a> by Marie Pepo. Me: <a
+                href="https://spritekitchen.itch.io/lia-animated-pixel-art-girl-character">Lia</a> by Sprite Kitchen,
+              recolored. Cat: <a href="https://carysaurus.itch.io/black-cat-sprites">Black Cat Sprites</a> by
+              Carysaurus,
+              recolored grey. Yarn: <a href="https://toffeecraft.itch.io/cat-retro">Retro Cats</a> by ToffeeCraft.
+              Backgrounds: <a href="https://the-pixel-nook.itch.io/parallax-backgrounds-demo">Parallax Backgrounds</a>
+              by
+              The Pixel Nook. Lake, boat and fishing rod prop: <a
+                href="https://free-game-assets.itch.io/free-fishing-pixel-art-pack">Free Fishing Pixel Art Pack</a> by
+              CraftPix.net. Fishing rod animation and bite marker: <a
+                href="https://sinigangs.itch.io/pixel-fishing-assets">Pixel Fishing Assets</a> by Sinigangs. Fish: <a
+                href="https://shubibubi.itch.io/cozy-fishing">Cozy Fishing</a> by Shubibubi. The backyard, tent,
+              campfire, TV, trees and game console are drawn in
+              code. Sound effects are synthesized in the browser. Full list in CREDITS.md.</p>
+          </details>
+          <a href="#top">Back to the top</a>
+        </footer>
+      </div>
+    </section>
+
+    <aside class="sv quests" id="quests" aria-label="Quest log">
+      <button type="button" id="questToggle" aria-expanded="false"><span id="questTitle">Quests 0/4</span><span
+          id="questCaret" aria-hidden="true">+</span></button>
+      <div id="questBody" hidden>
+        <ul id="questList"></ul>
+        <p class="all" id="questAll" hidden>100% complete. Thanks for playing!</p>
+      </div>
+    </aside>
+    <div class="sv toast" id="toast" role="status" hidden></div>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="main.js"></script>
+<style>.title{display:none}</style></body>
+
+</html>
