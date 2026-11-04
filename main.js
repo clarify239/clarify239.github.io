@@ -458,7 +458,7 @@
     const list = photosFor(o), n = list.length, i = n ? ((gal[o.id] || 0) % n + n) % n : 0;
     let extra = '';
     if (o.live === 'music') extra = '<div class="live"><span class="label">● Now playing</span><span class="value">' + esc(live.song) + ' — ' + esc(live.artist) + '</span><span class="sub">' + (live.isLive ? 'Live from Spotify' : 'Last song I had on repeat') + '</span></div>';
-    if (o.live === 'games') extra = '<div class="live"><span class="label">● Recently played on Steam</span><span class="value">' + esc(live.game) + (live.hours ? ' · ' + esc(live.hours) : '') + '</span><span class="sub">' + (live.gameLive ? 'Live from Steam' : 'Most recent game') + '</span></div>';
+    if (o.live === 'games') extra = '<div class="live"><span class="label">● Recently played</span><span class="value">' + esc(live.game) + (live.hours ? ' · ' + esc(live.hours) : '') + '</span><span class="sub">' + 'Most recent game' + '</span></div>';
     if (o.live === 'tv') extra = '<div class="live"><span class="label">● Now watching</span><span class="value">' + esc(live.show) + '</span>' + (live.showNote ? '<span class="sub">' + esc(live.showNote) + '</span>' : '') + '</div>';
     if (o.id === 'camping') extra = '<button type="button" class="btn btn-gold roast" data-act="mallow">Roast a marshmallow</button>';
     if (o.skills) {
@@ -954,14 +954,6 @@
         if (img) live.albumArt = img['#text'];
         if (popup === 'music') renderDialog();
       }).catch(() => {});
-  }
-  if (CFG.steamWorkerUrl) {
-    fetch(CFG.steamWorkerUrl).then((r) => r.json()).then((j) => {
-      if (!j || !j.name) return;
-      live.game = j.name; live.hours = j.hours || ''; live.gameLive = true;
-      if (j.image) live.gameArt = j.image;
-      if (popup === 'games') renderDialog();
-    }).catch(() => {});
   }
 
   /* ---------------- Friends & fun stuff: the memory claw machine ---------------- */

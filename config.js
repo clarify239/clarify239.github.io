@@ -21,7 +21,7 @@ window.SITE_CONFIG = {
     camping: ["assets/camping1.jpg", "assets/camping2.jpg", "assets/camping3.png"],
     fish:    ["assets/fishing1.png", "assets/fishing2.png", "assets/fishing3.png"],
     music:   [],   // extra photos. Album art (set up Last.fm below) is added first, automatically.
-    games:   [],   // extra photos. Game art (set up Steam below) is added first, automatically.
+    games:   [],   // extra photos. Game art is added first, automatically.
   },
 
   // The "Friends & fun stuff" carousel in the About section. Add as many as you like.
@@ -47,8 +47,6 @@ window.SITE_CONFIG = {
   // https://www.last.fm/api/account/create and fill in both values below.
   lastfm: { user: '', apiKey: '' },
 
-  // Live Steam: deploy steam-worker.js (see README) and paste its URL here.
-  steamWorkerUrl: '',
 
   // Project links and media for the fishing cards ('' hides a link / shows a placeholder)
   projects: {
