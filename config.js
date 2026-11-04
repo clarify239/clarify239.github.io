@@ -17,7 +17,7 @@ window.SITE_CONFIG = {
     crochet: ['assets/crochet1.png', 'assets/crochet2.png', 'assets/crochet3.png'],
     cats:    ['assets/astro1.png', 'assets/astro2.png', 'assets/astro3.png'],
     tv:      [],
-    drinks:  [],   // boba, matcha, barista photos
+    drinks:  ['assets/drinks1.png', 'assets/drinks2.png', 'assets/drinks3.png'],   // boba, matcha, barista photos
     camping: ["assets/camping1.jpg", "assets/camping2.jpg", "assets/camping3.png"],
     fish:    ["assets/fishing1.png", "assets/fishing2.png", "assets/fishing3.png"],
     music:   [],   // extra photos. Album art (set up Last.fm below) is added first, automatically.
@@ -25,10 +25,11 @@ window.SITE_CONFIG = {
   },
 
   // The "Friends & fun stuff" carousel in the About section. Add as many as you like.
-  // Each one is { src: 'assets/file.jpg', caption: 'Short caption' }  (caption is optional)
+  // Each one is { src: 'assets/file.jpg', caption: 'Short caption', label: 'Ball text', story: 'A sentence or two' }
+  // Only src is required. "label" is the word on the prize ball, and "story" shows on the sticky note by the memory wall.
   gallery: [
      { src: 'assets/friends1.png', caption: 'Hiking with friends!', label: 'Hiking' },
-     { src: 'assets/friends2.jpg', caption: 'Halloween 2026!', label: 'Halloween' },
+     { src: 'assets/friends2.png', caption: 'Halloween 2026!', label: 'Halloween' },
      { src: 'assets/friends3.png', caption: 'Women in Computing at Cornell Hangout!', label: 'WICC' },
      { src: 'assets/friends4.png', caption: 'My Chinese Student Association (CSA) Family', label: 'CSA' },
      { src: 'assets/friends5.jpg', caption: 'Going to PAX East via the Development in Games Association at Cornell!', label: 'PAX' },

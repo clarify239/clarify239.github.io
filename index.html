@@ -44,7 +44,7 @@
       <div class="title-inner">
         <span class="title-kicker">a cozy portfolio by</span>
         <h1>Claire Cheng</h1>
-        <p>CS student at Cornell. Games, XR and AI tools. Cats and crochet.</p>
+        <p>CS @ Cornell</p>
         <div class="actions">
           <button type="button" class="btn btn-gold blink" id="startBtn">Press Start</button>
           <button type="button" class="btn btn-wood" id="quickBtn">Quick view</button>
@@ -215,18 +215,24 @@
             <h2>A little about me</h2>
             <p>CS major with a psychology minor, class of 2029. Psychology is why I care how people feel using what I
               make. I'm also social director for Women in Computing at Cornell, planning events for 50+ people.</p>
-            <p>Off the keyboard: crochet, baking, making boba and matcha, fishing, video games and Brooklyn Nine-Nine reruns.</p>
+            <p>Off the keyboard: crochet, baking, making boba and matcha, fishing, video games and Brooklyn Nine-Nine
+              reruns.</p>
             <span class="inventory-title">Inventory</span>
             <div class="inventory" id="inventory"></div>
           </div>
         </div>
         <div class="sv arcade" id="gallery" role="region" aria-label="Memory claw machine with friends and fun stuff">
-          <div class="arc-head"><h2>Friends &amp; fun stuff</h2><span>Grab a memory with the claw. Click the glass, or use the arrow keys and Space.</span></div>
+          <div class="arc-head">
+            <h2>Learn more about me!</h2><span>Grab a memory with the claw and it gets pinned to the wall. Click a
+              ball, click the glass, or use the arrow keys and Space.</span>
+          </div>
           <div class="cab">
             <div class="cab-sign" aria-hidden="true"><b>MEMORY CLAW</b></div>
-            <div class="cab-glass" id="clawGlass" tabindex="0" role="application" aria-label="Claw machine. Left and right arrow keys move the claw. Space or Enter drops it. You can also click the glass.">
+            <div class="cab-glass" id="clawGlass" tabindex="0" role="application"
+              aria-label="Claw machine. Left and right arrow keys move the claw. Space or Enter drops it. You can also click the glass.">
               <div class="claw-rail" aria-hidden="true"></div>
-              <div class="claw" id="claw" aria-hidden="true"><i class="claw-cable" id="clawCable"></i><img class="claw-head" id="clawHead" alt=""></div>
+              <div class="claw" id="claw" aria-hidden="true"><i class="claw-cable" id="clawCable"></i><img
+                  class="claw-head" id="clawHead" alt=""></div>
               <div class="pit" id="pit"></div>
               <div class="chute" aria-hidden="true"><span>PRIZE</span></div>
               <div class="claw-msg" id="clawMsg" aria-live="polite"></div>
@@ -241,8 +247,16 @@
             </div>
           </div>
           <div class="shelf">
-            <div class="shelf-head"><b>Prize shelf</b><span id="shelfCount"></span><button type="button" class="shelf-all btn btn-wood" id="shelfAll">Show all</button></div>
-            <div class="shelf-list" id="shelfList"></div>
+            <div class="score" aria-label="Scoreboard"><span>Memories <b id="scMem">0</b></span><span>Tries <b
+                  id="scTry">0</b></span><span>Best <b id="scBest">-</b></span></div>
+            <div class="board" id="board">
+              <div class="board-list" id="shelfList"></div>
+            </div>
+            <div class="note" id="note" aria-live="polite"><b id="noteTitle"></b>
+              <p id="noteText"></p>
+            </div>
+            <div class="board-foot"><span id="shelfCount"></span><button type="button" class="shelf-all btn btn-wood"
+                id="shelfAll">Show all</button></div>
           </div>
         </div>
       </div>
@@ -271,8 +285,7 @@
           </div>
         </div>
         <footer class="credits">
-          <strong>Art credits</strong>
-          <p>House: <a href="https://marie-pepo.itch.io/cosy-cabin">Cosy Cabin</a> by Marie Pepo. Me: <a
+          <details class="credit-fold"><summary>Art credits</summary><p>House: <a href="https://marie-pepo.itch.io/cosy-cabin">Cosy Cabin</a> by Marie Pepo. Me: <a
               href="https://spritekitchen.itch.io/lia-animated-pixel-art-girl-character">Lia</a> by Sprite Kitchen,
             recolored. Cat: <a href="https://carysaurus.itch.io/black-cat-sprites">Black Cat Sprites</a> by Carysaurus,
             recolored grey. Yarn: <a href="https://toffeecraft.itch.io/cat-retro">Retro Cats</a> by ToffeeCraft.
@@ -281,7 +294,7 @@
               href="https://free-game-assets.itch.io/free-fishing-pixel-art-pack">Free Fishing Pixel Art Pack</a> by
             CraftPix.net. Fishing rod animation and bite marker: [pixel fishing asset pack, author]. Fish: [fishing
             pack, author], non-commercial license. The backyard, tent, campfire, TV, trees and game console are drawn in
-            code. Sound effects are synthesized in the browser. Full list in CREDITS.md.</p>
+            code. Sound effects are synthesized in the browser. Full list in CREDITS.md.</p></details>
           <a href="#top">Back to the top</a>
         </footer>
       </div>

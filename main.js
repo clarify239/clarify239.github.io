@@ -234,7 +234,6 @@
   const live = { song: (CFG.nowPlaying || {}).song || '[Song title]', artist: (CFG.nowPlaying || {}).artist || '[Artist]', game: (CFG.recentGame || {}).name || 'Overwatch', hours: (CFG.recentGame || {}).hours || '', albumArt: '', gameArt: '', show: W_.title || 'Brooklyn Nine-Nine', showNote: W_.note || '' };
   const BOOKS = [
     ['Python', '#3C3F61', 'Contract AI, the Ops Hub scraper and the smart-glasses app'],
-    ['PyTorch', '#A54222', 'The contract risk model at Accenture AI Studio'],
     ['C#', '#70994D', 'Veil-Sur, BREWHAHA and Cornell XR’s VR scenes'],
     ['Unity', '#5A5866', 'Veil-Sur, BREWHAHA and Cornell XR'],
     ['Java', '#CE8137', 'Object-oriented programming and data structures coursework'],
@@ -255,7 +254,7 @@
     { id: 'music', x: 140, y: 254, w: 27, h: 17, src: 'assets/obj_hp.png', stand: [153, 292], kicker: 'On the floor cushion', title: 'What I’m listening to', word: 'album', live: 'music', blurb: 'Usually something cozy while I code.', under: [IMG.poufTeal, 134, 256, 36, 22] },
     { id: 'games', x: 305, y: 286, w: 30, h: 14, src: 'assets/obj_gb.png', stand: [320, 324], kicker: 'On the beanbag', title: 'What I’m playing', word: 'game', live: 'games', blurb: 'Playing games is how I got into making them. It\'s one of my favorite ways to catch up with my friends!', under: [IMG.poufRed, 302, 288, 36, 22] },
     { id: 'crochet', x: 575, y: 298, w: 54, h: 15, src: 'assets/obj_yarn.png', stand: [560, 334], kicker: 'In the yarn basket', title: 'Crochet', word: 'crochet', blurb: 'How I unwind. I love making clothing and stuffed animals.Currently working on a sweater based off my cat!', under: [IMG.basket, 570, 304, 64, 22] },
-    { id: 'drinks', x: 430, y: 205, w: 56, h: 52, src: IMG.drinks, stand: [458, 284], kicker: 'At the café table', title: 'Drink making', word: 'drink', blurb: 'I love boba and matcha. I was a barista for 2 years, so making drinks is second nature to me.' },
+    { id: 'drinks', x: 430, y: 205, w: 56, h: 52, src: IMG.drinks, stand: [458, 284], kicker: 'At the café table', title: 'Drink making', word: 'drink', blurb: 'I love boba and matcha, making and drinking! Fun fact, I was a barista at a boba shop for 2 years!' },
     { id: 'cats', cat: true, src: 'assets/cat_portrait.png', kicker: 'Wandering the house', title: 'Astro!', word: 'cat', blurb: 'The love of my life, my cat Astro! His purring on my chest always makes me fall asleep instantly.' },
     { id: 'camping', x: 62, y: 425, w: 84, h: 62, src: IMG.tent, stand: [142, 526], kicker: 'In the backyard', title: 'Camping', word: 'camping', blurb: 'Barbeque, marshmallows, and starry nights. The times spent with my friends next to the campfire are some of my favorites.' },
     { id: 'fish', x: 496, y: 490, w: 47, h: 42, src: 'assets/obj_rod.png', stand: [508, 562], kicker: 'On the dock', title: 'Fishing', word: 'fishing', blurb: 'Quiet mornings on the water, or evenings at the lake. I primarily fresh water fish for bass and crappie.' },
@@ -326,7 +325,7 @@
   world.insertBefore(fireBtn, catBtn);
 
   const p ={ x: 360, y: 270, f: 'r', m: false };
-  const c = { x: 440, y: 240, f: 'l', m: false, tx: 440, ty: 240, wait: 1.5 };
+  const c = { x: 400, y: 292, f: 'l', m: false, tx: 400, ty: 292, wait: 1.5 };
   const gal = {}, joy = { x: 0, y: 0, on: false };
   const mg = { open: false, hold: false, heat: 0, done: false, pending: false };
   let cam = null, keys = {}, tgt = null, route = [], dest = null, tgtOpen = false, dismissed = null, popup = null, tap = 0, tapDir = null, stuck = 0, stepT = 0, book = null, areaName = 'Home', knobKey = '';
@@ -644,7 +643,13 @@
       stepT += dt; if (moving && stepT > 0.3) { stepT = 0; sfx('step'); puff(p.x, p.y); }
     }
     if (!dest && mark.classList.contains('on')) mark.classList.remove('on');
-    // cat
+    // cat (if it ever ends up inside something solid, hop out to the nearest free spot)
+    if (hit(c.x, c.y)) {
+      for (let r = 6, done = false; r < 140 && !done; r += 6) for (let a = 0; a < 16 && !done; a++) {
+        const nx = c.x + Math.cos(a / 16 * 6.2832) * r, ny = c.y + Math.sin(a / 16 * 6.2832) * r;
+        if (!hit(nx, ny)) { c.x = nx; c.y = ny; c.m = false; c.wait = 0.5; done = true; }
+      }
+    }
     c.wait -= dt;
     if (c.wait <= 0 && !c.m) {
       for (let i = 0; i < 12; i++) { const tx = 80 + Math.random() * 540, ty = 150 + Math.random() * 180; if (!hit(tx, ty)) { c.tx = tx; c.ty = ty; c.m = true; break; } }
@@ -885,10 +890,11 @@
   (function () {
     const list = (CFG.gallery || []).map((g) => (typeof g === 'string' ? { src: g, caption: '' } : g)).filter((g) => g && g.src);
     const glass = $('clawGlass'), pit = $('pit'), clawEl = $('claw'), cable = $('clawCable'), head = $('clawHead'), msgEl = $('clawMsg'), pol = $('polaroid');
+    const board = $('board'), noteTitle = $('noteTitle'), noteText = $('noteText'), scMem = $('scMem'), scTry = $('scTry'), scBest = $('scBest');
     const shelf = $('shelfList'), shelfCount = $('shelfCount'), btnL = $('clawL'), btnR = $('clawR'), btnD = $('clawDrop'), allBtn = $('shelfAll');
     if (!list.length) {
       pit.innerHTML = '<div class="gal-empty">Add photos to <b>gallery</b> in config.js to fill the claw machine.</div>';
-      $('shelfList').parentNode.hidden = true; return;
+      $('shelfList').closest('.shelf').hidden = true; return;
     }
     const N = list.length;
     const clawSpr = (open) => mk(24, 20, (g) => {
@@ -915,6 +921,8 @@
     const homes = prizes.map(() => ({ jx: (rnd() - 0.5) * 12, jy: (rnd() - 0.5) * 6, rot: 0 }));
     const got = new Set();
     let gw = 0, gh = 0, cx = 0, tx = 0, hy = 0, railY = 0, restY = 0, minX = 0, maxX = 0, chuteX = 0, chuteY = 0, stopY = 0;
+    let sel = null, tries = 0, cheated = false, best = 0;
+    try { best = +localStorage.getItem('cc-claw-best') || 0; } catch (e) { best = 0; }
     let wanted = null, st = 'idle', stT = 0, target = null, carried = null, queueDrop = false, polOpen = false, keyL = false, keyR = false, bL = false, bR = false, stepT = 0, msgT = 0;
     const setMsg = (t) => { msgEl.textContent = t; };
     let physAwake = 0;
@@ -975,12 +983,23 @@
       if (carried) { carried.el.style.left = (cx - carried.cw / 2).toFixed(1) + 'px'; carried.el.style.top = (hy + 38).toFixed(1) + 'px'; }
     }
     function renderShelf() {
-      shelf.innerHTML = list.map((g, k) => got.has(k)
-        ? '<button type="button" class="shelf-item" data-k="' + k + '" aria-label="Open memory: ' + esc(g.caption || ('Photo ' + (k + 1))) + '"><img alt="" src="' + esc(g.src) + '"></button>'
-        : '<span class="shelf-item locked" aria-hidden="true">?</span>').join('');
-      shelfCount.textContent = got.size + ' / ' + N;
+      board.style.setProperty('--pw', (N > 10 ? 58 : N > 6 ? 70 : 84) + 'px');
+      shelf.innerHTML = list.map((g, k) => {
+        const rot = ((k * 37) % 9) - 4;
+        return got.has(k)
+          ? '<button type="button" class="pin' + (sel === k ? ' sel' : '') + '" data-k="' + k + '" style="--r:' + rot + 'deg" aria-label="Open memory: ' + esc(g.caption || ('Photo ' + (k + 1))) + '"><img alt="" src="' + esc(g.src) + '"></button>'
+          : '<span class="pin empty" style="--r:' + rot + 'deg" aria-hidden="true">?</span>';
+      }).join('');
+      shelfCount.textContent = got.size + ' / ' + N + ' pinned';
       allBtn.textContent = got.size >= N ? 'Refill machine' : 'Show all';
-      shelf.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => { unlock(); if (st === 'idle') showPol(+b.dataset.k, true); }));
+      shelf.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => { unlock(); sel = +b.dataset.k; showNote(sel); renderShelf(); if (st === 'idle') showPol(sel, true); }));
+      scMem.textContent = got.size + ' / ' + N; scTry.textContent = tries; scBest.textContent = best ? best + (best === 1 ? ' try' : ' tries') : '-';
+    }
+    function showNote(k) {
+      const g = list[k];
+      if (!g) { noteTitle.textContent = 'Memory wall'; noteText.textContent = 'Win a prize to pin it here. Click a pinned photo to read its story.'; return; }
+      noteTitle.textContent = g.caption || ('Memory ' + (k + 1));
+      noteText.textContent = g.story || '';
     }
     function showPol(k, fromShelf) {
       const g = list[k];
@@ -989,13 +1008,14 @@
       pol.hidden = false; sfx('open');
       pol.querySelector('.pol-x').addEventListener('click', (e) => { e.stopPropagation(); closePol(); });
       pol.querySelector('.pol-x').focus({ preventScroll: true });
-      if (!fromShelf) { got.add(k); renderShelf(); if (got.size === N) { setMsg('You collected every memory!'); sfx('quest'); } }
+      if (!fromShelf) { got.add(k); sel = k; renderShelf(); showNote(k); if (got.size === N) { setMsg('You collected every memory!'); sfx('quest'); if (!cheated && (!best || tries < best)) { best = tries; try { localStorage.setItem('cc-claw-best', String(best)); } catch (e) {} renderShelf(); toast('New best! Cleared in ' + tries + (tries === 1 ? ' try' : ' tries')); } } }
     }
     function closePol() { if (!polOpen) return; polOpen = false; pol.hidden = true; sfx('close'); setMsg(got.size >= N ? 'Machine empty! Tap Refill to play again.' : 'Grab another memory!'); glass.focus({ preventScroll: true }); }
     pol.addEventListener('click', (e) => { e.stopPropagation(); closePol(); });
 
     function calcStop() { stopY = target ? (target.hy - target.s * 0.5) - HH + 24 : gh * 0.84 - HH; }
     function startDrop() {
+      tries++; scTry.textContent = tries;
       if (wanted && !wanted.taken && !wanted.held) target = wanted;
       else {
         const near = prizes.filter((p) => !p.taken && !p.held && Math.abs(p.hx - cx) < p.s * 0.5);
@@ -1082,20 +1102,20 @@
       unlock();
       if (got.size >= N) {
         if (st !== 'idle' || polOpen) return;
-        got.clear(); sfx('open');
+        got.clear(); sfx('open'); tries = 0; cheated = false; sel = null; showNote(null);
         prizes.forEach((p) => { p.taken = false; p.held = false; p.el.hidden = false; p.el.classList.remove('pop'); void p.el.offsetWidth; p.el.classList.add('pop'); });
         layout();
         setMsg('Machine refilled!');
       } else {
         if (st !== 'idle') return;
-        list.forEach((g, k) => { got.add(k); prizes[k].taken = true; prizes[k].el.hidden = true; });
+        cheated = true; list.forEach((g, k) => { got.add(k); prizes[k].taken = true; prizes[k].el.hidden = true; });
         sfx('quest'); setMsg('Machine emptied. Every memory is on the shelf.');
       }
       renderShelf();
     });
 
     if ('ResizeObserver' in window) new ResizeObserver(layout).observe(glass); else window.addEventListener('resize', layout);
-    renderShelf(); layout();
+    showNote(null); renderShelf(); layout();
     setMsg('Grab a memory!');
   })();
 
